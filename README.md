@@ -1,2 +1,3 @@
 # DataStructe-Algorithms_Study
-some practise when study DataStructe and Algorithms
+
+学习数据结构和算法时的一些练习代码。
