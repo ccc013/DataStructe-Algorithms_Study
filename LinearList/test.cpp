@@ -2,6 +2,7 @@
 #include"ResizeLinearList.h"
 #include"llist.h"
 #include"xcept.h"
+#include"ChainList.h"
 
 using std::cout;
 using std::endl;
@@ -51,13 +52,43 @@ void testResizeLinearList(){
 	}
 }
 
+void testChainList(){
+	try{
+		cout << "test ChainList\n";
+		Chain<int> L;
+		cout << "Length = " << L.Length() << endl;
+		cout << "IsEmpty = " << L.isEmpty() << endl;
+		for (int i = 0; i < 10; i++){
+			L.Insert(i, i * 2);
+		}
+		Output(L);
+		int z;
+		L.Find(1, z);
+		cout << "First element is " << z << endl;
+		cout << "Length = " << L.Length() << endl;
+		L.Delete(3, z);
+		cout << "Deleted element is " << z << endl;
+		Output(L);
+		L.Append(66);
+		cout << "list is " << L << endl;
+		L.Erase();
+		cout << "list is " << L << endl;
+	}
+	catch (...){
+		std::cerr << "An exception has occured" << endl;
+	}
+	
+}
+
 int main(){
 
 	// testLinearList
-	testLinearList();
+	//testLinearList();
 
 	// test ResizeLinearList
-	testResizeLinearList();
+	//testResizeLinearList();
+
+	testChainList();
 
 	system("pause");
 	return 0;
