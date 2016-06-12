@@ -1,22 +1,23 @@
 #ifndef CHAIN_H_
 #define CHAIN_H_
 #include<iostream>
-
 // 必须先声明，否则友元模板类之间无法直接访问，会出现未定义的错误。
 template<class T>
 class Chain;
 template<class T>
 class ChainIterator;
+template<class T>
+class CircularList;
 
 template<class T>
 class ChainNode{
 	friend Chain<T>;
 	friend ChainIterator<T>;
+	friend CircularList<T>;
 private:
 	T data;
 	ChainNode<T> * link;
 };
-
 template<class T>
 class Chain{
 	friend ChainIterator<T>;
