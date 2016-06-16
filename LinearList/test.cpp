@@ -4,6 +4,7 @@
 #include"xcept.h"
 #include"ChainList.h"
 #include"CircularList.h"
+#include"IndirectList.h"
 
 using std::cout;
 using std::endl;
@@ -104,6 +105,34 @@ void testCircularList(){
 	}
 }
 
+void testIndirectList(){
+	try{
+		cout << "test IndirectList\n";
+		IndrectList<int> L(20);
+		cout << "Length = " << L.Length() << endl;
+		cout << "IsEmpty = " << L.isEmpty() << endl;
+		for (int i = 0; i < 5; i++){
+			L.Insert(i, i + 1);
+		}
+		cout << "List is " << L << endl;
+		int z;
+		L.Find(3, z);
+		cout << "The 3th element is " << z << endl;
+		cout << "Length = " << L.Length() << endl;
+		L.Delete(3, z);
+		cout << "Deleted element is " << z << endl;
+		cout << "List is " << L << endl;
+		for (int j = L.Length(); j < 20; j++)
+			L.Insert(j, j * 2);
+		cout << "after insert, List is " << L << endl;
+		cout << "Search List:\n";
+		cout << "10 is in List's " << L.Search(10) << "th location.\n";
+	}
+	catch (...){
+		std::cerr << "An exception has occured" << endl;
+	}
+}
+
 int main(){
 
 	// testLinearList
@@ -116,7 +145,10 @@ int main(){
 	//testChainList();
 
 	// test CircularList
-	testCircularList();
+	//testCircularList();
+
+	// test IndirectList
+	testIndirectList();
 
 	system("pause");
 	return 0;
