@@ -5,10 +5,13 @@
 #include"ChainList.h"
 #include"CircularList.h"
 #include"IndirectList.h"
+#include"Node.h"
+#include<ctime>
 
 using std::cout;
 using std::endl;
 using std::cin;
+
 
 void testLinearList(){
 	try{
@@ -133,6 +136,42 @@ void testIndirectList(){
 	}
 }
 
+inline int F1(Node& x){
+	return x.exam1;
+}
+
+inline int F2(Node& x){
+	return x.exam2;
+}
+
+inline int F3(Node& x){
+	return x.exam1 + x.exam2 + x.exam3;
+}
+
+void testBinSort(){
+	Node x;
+	Chain<Node> L;
+	srand((unsigned)time(0));
+	char name[] = { 'a', 'b', 'c', 'd','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u'};
+	for (int i = 1; i <= 20; i++){
+		x.exam1 = i / 2;
+		x.exam2 = 20 - i;
+		x.exam3 = rand() % 100;
+		x.name = &name[i];
+		L.Insert(0, x);
+	}
+	L.BinSort(10, F1);
+	cout << "Sort on exam 1" << endl;
+	cout << L << endl;
+	L.BinSort(20, F2);
+	cout << "Sort on exam 2" << endl;
+	cout << L << endl;
+	L.BinSort(130, F3);
+	cout << "Sort on exam 3" << endl;
+	cout << L << endl;
+}
+
+
 int main(){
 
 	// testLinearList
@@ -148,7 +187,13 @@ int main(){
 	//testCircularList();
 
 	// test IndirectList
-	testIndirectList();
+	//testIndirectList();
+
+	// test SimChain
+	//testSimChain();
+
+	// test BinSort
+	testBinSort();
 
 	system("pause");
 	return 0;

@@ -41,6 +41,8 @@ public:
 	void Zero() { first = 0; }
 	// 在链表末尾右端添加一个元素
 	Chain<T> & Append(const T& x);
+	// 箱子排序
+	void BinSort(int range, int(*value)(T& x));
 };
 
 // 链表遍历器类
@@ -240,6 +242,50 @@ Chain<T>& Chain<T>::Append(const T&x){
 		first = last = newNode;
 	}
 	return *this;
+}
+
+template<class T>
+void Chain<T>::BinSort(int range,int (*value)(T& x)){
+	// 箱子索引号
+	int b;	
+	ChainNode<T> **bottom, **top;
+	// 箱子初始化
+	bottom = new ChainNode<T> *[range + 1];
+	top = new ChainNode<T> *[range + 1];
+	for (b = 0; b <= range; b++)
+		bottom[b] = 0;
+	// 把节点分配到各个箱子中；
+	for (; first; first = first->link){
+		b =value( first->data);
+		if (bottom[b]){
+			// 箱子非空
+			top[b]->link = first;
+			top[b] = first;
+		}
+		else{
+			bottom[b] = top[b] = first;
+		}
+	}
+	// 收集各箱子中的元素，产生一个排序链表
+	ChainNode<T>*y = 0;
+	for (b = 0; b <= range; b++){
+		if (bottom[b]){
+			// 箱子非空
+			if (y){
+				// 不是第一个非空的箱子
+				y->link = bottom[b];
+			}
+			else{
+				// 第一个非空的箱子
+				first = bottom[b];
+			}
+			y = top[b];
+		}
+	}
+	if (y)
+		y->link = 0;
+	delete[] bottom;
+	delete[] top;
 }
 
 #endif
