@@ -2,6 +2,8 @@
 #include<ctime>
 #include"xcept.h"
 #include"Array1D.h"
+#include"Array2D.h"
+#include"Matrix.h"
 
 using std::cout;
 using std::endl;
@@ -47,9 +49,83 @@ void testArray1D(){
 	cout << endl;
 }
 
+void testArray2D(){
+	Array2D<int> a(5,3);
+	Array2D<int> b(3, 5);
+	cout << "new 2D Array a:\n";
+	for (int i = 0; i < 5; i++){
+		for (int j = 0; j < 3; j++){
+			(a[i])[j] = i * 3 + j;
+		}
+	}
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 5; j++){
+			(b[i])[j] = i * 2 + j;
+		}
+	}
+
+	a.show();
+	cout << "new 2D Array b:\n";
+	b.show();
+	cout << "a*b = \n";
+	Array2D<int> c(5, 5);
+	c = a*b;
+	c.show();
+
+}
+
+void testMatrix(){
+	try{
+		Matrix<int> m1(2, 2);
+		Matrix<int> m2(2, 4);
+		Matrix<int> m11(2, 2);
+		for (int i = 1; i <= 2; i++){
+			for (int j = 1; j <= 2; j++){
+				m1(i, j) = i * 2 + j;
+				m11(i, j) = i * 3 + j + 1;
+			}
+		}
+		for (int i = 1; i <= 2; i++){
+			for (int j = 1; j <= 4; j++){
+				m2(i, j) = i *3 + j+1;
+			}
+		}
+		cout << "show m1:\n";
+		cout << m1;
+		cout << "show m2:\n";
+		cout << m2;
+		cout << "show m11:\n";
+		cout << m11;
+
+		Matrix<int> m3;
+		Matrix<int> m4;
+		m3 = m1 * m2;
+		cout << "m3 = m1 * m2:\n";
+		cout << m3;
+
+		m4 = m11 - m1;
+		cout << "m4 = m11 - m1:\n";
+		cout << m4;
+
+		cout << "-m2\n";
+		cout << -m2;
+
+		cout << "m4 = m11+m1\n";
+		m4 = m11 + m1;
+		cout << m4;
+
+		cout << "every element plus 10 for m1\n";
+		m1 += 10;
+		cout << m1;
+	}
+	catch (...){
+		std::cerr << "errors!\n";
+	}
+}
+
 int main(){
 
-	testArray1D();
+	testMatrix();
 
 	system("pause");
 	return 0;
