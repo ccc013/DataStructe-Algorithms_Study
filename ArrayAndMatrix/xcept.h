@@ -32,6 +32,13 @@ public:
 	}
 };
 
+class MustBeZero{
+public:
+	MustBeZero(){
+		std::cerr << "it must be zero!";
+	}
+};
+
 // 使new引发NoMem异常而不是xalloc异常
 void my_new_handler(){
 	throw NoMem();

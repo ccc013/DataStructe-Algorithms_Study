@@ -4,6 +4,7 @@
 #include"Array1D.h"
 #include"Array2D.h"
 #include"Matrix.h"
+#include"SpecialMatrix.h"
 
 using std::cout;
 using std::endl;
@@ -123,9 +124,53 @@ void testMatrix(){
 	}
 }
 
+void testSpecialMatrix(){
+	try{
+		DiagonalMatrix<int> DMatrix(3);
+		TridiagonalMatrix<int> TDMatrix(3);
+		LowerMatrix<int> LDMatrix(3);
+		for (int i = 1; i <= 3; i++){
+			for (int j = 1; j <= 3; j++){
+				if (i==j)
+					DMatrix.Store(i * 3 + j, i, j);
+				if (i - j == 1 || i == j || i - j == -1)
+					TDMatrix.Store(i * 2 + j, i, j);
+				if (i <= j)
+					LDMatrix.Store(i + j * 2, i, j);
+			}
+		}
+		cout << "show a 3*3 DiagonalMatrix:\n";
+		for (int i = 1; i <= 3; i++){
+			for (int j = 1; j <= 3; j++){
+				cout << DMatrix.Retrieve(i, j) << " ";
+			}
+			cout << "\n";
+		}
+
+		cout << "show a 3*3 TriDiagonalMatrix:\n";
+		for (int i = 1; i <= 3; i++){
+			for (int j = 1; j <= 3; j++){
+				cout << TDMatrix.Retrieve(i, j) << " ";
+			}
+			cout << "\n";
+		}
+
+		cout << "show a 3*3 LowerDiagonalMatrix:\n";
+		for (int i = 1; i <= 3; i++){
+			for (int j = 1; j <= 3; j++){
+				cout << LDMatrix.Retrieve(i, j) << " ";
+			}
+			cout << "\n";
+		}
+	}
+	catch (...){
+		std::cerr << "errors!\n";
+	}
+}
+
 int main(){
 
-	testMatrix();
+	testSpecialMatrix();
 
 	system("pause");
 	return 0;
