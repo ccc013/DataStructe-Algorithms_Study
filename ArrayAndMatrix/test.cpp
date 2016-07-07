@@ -5,6 +5,8 @@
 #include"Array2D.h"
 #include"Matrix.h"
 #include"SpecialMatrix.h"
+#include"SparseMatrix.h"
+#include"LinkMatrix.h"
 
 using std::cout;
 using std::endl;
@@ -135,7 +137,7 @@ void testSpecialMatrix(){
 					DMatrix.Store(i * 3 + j, i, j);
 				if (i - j == 1 || i == j || i - j == -1)
 					TDMatrix.Store(i * 2 + j, i, j);
-				if (i <= j)
+				if (i >= j)
 					LDMatrix.Store(i + j * 2, i, j);
 			}
 		}
@@ -168,9 +170,53 @@ void testSpecialMatrix(){
 	}
 }
 
+void testSparseMatrix(){
+	try{
+		int Maxterms = 6;
+		SparseMatrix<int> SMatrix(Maxterms);
+		SparseMatrix<int> SMatrix_tranpose(Maxterms);
+		SparseMatrix<int> SMatrix_total(2*Maxterms);
+		cout << "create a sparseMatrix\n";
+		cin >> SMatrix;
+		cout << "show sparseMatrix\n";
+		cout << SMatrix;
+
+		SMatrix.Transpose(SMatrix_tranpose);
+		cout << "Tranpose SMatrix, the result is\n";
+		cout << SMatrix_tranpose;
+
+		SMatrix.Add(SMatrix_tranpose, SMatrix_total);
+		cout << "SMatrix + SMatrix_tranpose:\n";
+		cout << SMatrix_total;
+
+	}
+	catch (...){
+		std::cerr << "errors!\n";
+	}
+}
+
+void testLinkMatrix(){
+	try{
+		LinkMatrix<int> LM1;
+		LinkMatrix<int> LM2;
+		cout << "input 3*3 LinkMatrix\n";
+		cin >> LM1;
+
+		cout << "show\n";
+		cout << LM1;
+
+		cout << "tranpose LM1\n";
+		LM1.Transpose(LM2);
+		cout << LM2;
+
+	}
+	catch (...){
+		std::cerr << "errors!\n";
+	}
+}
 int main(){
 
-	testSpecialMatrix();
+	testLinkMatrix();
 
 	system("pause");
 	return 0;

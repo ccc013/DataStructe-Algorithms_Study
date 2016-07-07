@@ -31,12 +31,15 @@
 1. [1维数组](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/Array1D.h)
 2. [矩阵](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/Matrix.h)
 3. [特殊矩阵](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/SpecialMatrix.h)
+4. [稀疏矩阵--数组描述](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/SparseMatrix.h)
+5. [稀疏矩阵--链表描述](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/LinkMatrix.h)
 
 相关知识点笔记：
 
 1. [数组和矩阵1--数组](http://ccc013.github.io/2016/06/28/%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A9%E9%98%B51-%E6%95%B0%E7%BB%84/)
 2. [数组和矩阵2-矩阵](http://ccc013.github.io/2016/06/30/%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A9%E9%98%B52-%E7%9F%A9%E9%98%B5/)
 3. [数组和矩阵3-特殊矩阵](http://ccc013.github.io/2016/07/05/%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A9%E9%98%B53-%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%98%B5/)
+4. [数组和矩阵4--稀疏矩阵](http://ccc013.github.io/2016/07/07/%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A9%E9%98%B54-%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5/)
 
 
 
