@@ -3,7 +3,7 @@
 #include<iostream>
 
 template<class T>
-class Stack : public LinearList<T>
+class Stack : private LinearList<T>
 {
 public:
 	Stack(int MaxStackSize = 10) : LinearList<T>(MaxStackSize){}
