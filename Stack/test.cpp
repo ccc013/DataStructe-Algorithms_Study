@@ -3,6 +3,7 @@
 #include"xcept.h"
 #include"Stack.h"
 #include"llist.h"
+#include"LinkedStack.h"
 
 using std::cout;
 using std::endl;
@@ -29,10 +30,30 @@ void testStack(){
 
 }
 
+void testLinkedStack(){
+	LinkedStack<int> stack1;
+	cout << "show a empty stack\n";
+	cout << stack1;
+	for (int i = 0; i < 10; i++)
+		stack1.Add(i + 5);
+	cout << "stack is Full?\n";
+	if (stack1.IsFull())
+		cout << "Yes\n";
+	else
+		cout << "No\n";
+	cout << "show Stack1\n";
+	cout << stack1;
+
+	int x;
+	stack1.Delete(x);
+	cout << "pop stack1, it is " << x << ".The remain elements are\n";
+	cout << stack1;
+
+}
 
 int main(){
 
-	testStack();
+	testLinkedStack();
 
 	system("pause");
 	return 0;

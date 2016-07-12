@@ -62,12 +62,12 @@ template<class T>
 std::ostream& operator<<(std::ostream& out, const Stack<T>& x){
 	int pos = x.top;
 	if (x.IsEmpty())
-		std::cout << "There is no elements in stack";
+		out << "There is no elements in stack";
 	while (pos != -1){
-		std::cout << x.stack[pos] << " ";
+		out << x.stack[pos] << " ";
 		pos--;
 	}
-	std::cout << "\n";
+	out << "\n";
 	return out;
 }
 
