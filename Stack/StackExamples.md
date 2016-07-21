@@ -82,3 +82,100 @@ void TowersOfHanoi(int n, int x, int y, int z){
 }
 ```
 
+### 火车车厢重排
+> 一列货运列车共有n节车厢，每节车厢将停放在不同的车站。假定 n个车站的编号分别为1~n，货运列车按照第 n站至第1站的次序经过这些车站。车厢的编号与它们的目的地相同。为了便于从列车上卸掉相应的车厢，必须重新排列车厢，使各车厢从前至后按编号 1到n的次序排列。当所有的车厢都按照这种次序排列时，在每个车站只需卸掉最后一节车厢即可。
+
+
+这里使用k个链表形式的堆栈来描述k个缓冲铁轨。下列函数**Railroad**用于确定重排n个车厢，它最多可使用k个缓冲铁轨并假定车厢的次序为p[1:n]。如果不能成功重排，函数将返回false，否则返回true。具体实现如下所示：
+```
+// 火车车厢重排
+bool Railroad(int p[], int n, int k){
+    // k个缓冲铁轨，车厢初始排序为p[1:n], 如果重排成功，返回true，否则返回false，如果内存不足，则引发异常NoMem
+    // 创建于缓冲铁轨对应的堆栈
+    LinkedStack<int> *H = new LinkedStack<int>[k+1];
+    // 下一次要输出的车厢
+    int NowOut = 1;
+    // 缓冲铁轨中编号最小的车厢
+    int minH = n + 1;
+    // minH号车厢对应的缓冲铁轨
+    int minS;
+    // 进行车厢重排
+    for (int i = 1; i <= n; i++){
+        if (p[i] == NowOut){
+            // 直接输出
+            cout << "More car " << p[i] << " from input to output" << endl;
+            NowOut++;
+            while (minH == NowOut){
+                Output(minH, minS, H, k, n);
+                NowOut++;
+            }
+        }
+        else{
+            // 将p[i]送入某个缓冲铁轨
+            if (!Hold(p[i], minH, minS, H, k, n))
+                return false;
+        }
+    }
+    return true;
+}
+```
+
+下面则给出函数**Railroad**中使用的函数**Output和Hold**的代码实现，前者主要是用于将一节车厢从缓冲铁轨中输出到出轨处，同时修改minH和minS，而后者则是根据分配规则将车厢c送入某个缓冲铁轨，并在必要的时候修改minH和minS。
+```
+void Output(int& minH, int& minS, LinkedStack<int> H[], int k, int n){
+    // 把车厢从缓冲铁轨送至出轨处，同时修改minS和minH
+    // 车厢索引
+    int c;
+    // 从堆栈minS中删除编号最小的车厢minH
+    H[minS].Delete(c);
+    cout << "More car " << minH << " from holding track " << minS << " to output\n";
+    // 通过检查所有的栈顶，搜索新的minH和minS
+    minH = n + 2;
+    for (int i = 1; i <= k; i++){
+        if (!H[i].IsEmpty() && (c = H[i].Top()) < minH){
+            minH = c;
+            minS = i;
+        }
+    }
+}
+
+bool Hold(int c, int& minH, int& minS, LinkedStack<int> H[], int k, int n){
+    // 在一个缓冲铁轨中放入车厢c,如果没有可用的缓冲铁轨，返回false，如果空间不足，则引发异常NoMem
+    // 目前最优的铁轨
+    int BestTrack = 0;
+    // 最优铁轨上的头辆车厢号
+    int BestTop = n + 1;
+    // 车厢索引
+    int x;
+    // 扫描缓冲铁轨
+    for (int i = 1; i <= k; i++){
+        if (!H[i].IsEmpty()){
+            x = H[i].Top();
+            if (c < x && x < BestTop){
+                BestTop = c;
+                BestTrack = i;
+            }
+        }
+        else{
+            // 铁轨是空
+            if (!BestTrack)
+                BestTrack = i;
+        }
+    }
+    if (!BestTrack)
+        return false;
+    // 把车厢c送入缓冲铁轨
+    H[BestTrack].Add(c);
+    cout << "More car " << c << " from input to holding track " << BestTrack << endl;
+    // 必要时修改minH和minS
+    if (c < minH){
+        minH = c;
+        minS = BestTrack;
+    }
+    return true;
+}
+```
+上述两个函数Output和Hold的时间复杂性都是$\theta(k)$。而在函数Railroad中的while循环最多可以输出n-1节车厢，else语句也是最多有n-1节车厢被送入缓冲铁轨，因此，这两个函数所消耗的总时间是$O(kn)$。而Railroad函数中for循环部分的其余部分耗时$\theta(n)$,因此该函数的时间复杂性是$O(kn)$。
+
+
+
