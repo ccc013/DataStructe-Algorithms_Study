@@ -177,5 +177,52 @@ bool Hold(int c, int& minH, int& minS, LinkedStack<int> H[], int k, int n){
 ```
 上述两个函数Output和Hold的时间复杂性都是$\theta(k)$。而在函数Railroad中的while循环最多可以输出n-1节车厢，else语句也是最多有n-1节车厢被送入缓冲铁轨，因此，这两个函数所消耗的总时间是$O(kn)$。而Railroad函数中for循环部分的其余部分耗时$\theta(n)$,因此该函数的时间复杂性是$O(kn)$。
 
+### 开光盒布线
+> 开关盒布线问题是这样的：给定一个矩阵布线区域，其外围有若干针脚。两个针脚之间通过布设一条金属线路而实现互连，这条线路被称为电线，被限制在矩形区域内，此外如果两条电线发现交叉，会发生电流短路，因此不允许电线间的交叉，每对互连的针脚被称为网组。**我们的目标是要确定给定的网组，能否合理地布设电线以使其不发生交叉。**
 
+下面给出代码实现。它要求对每个网组进行编号，并且每个针脚也得有一个对应的网组编号，对于上图c的例子，给定网组是`net=[1,2,2,1,3,3,4,4]`。程序的复杂性是$\theta(n)$,n是针脚的数目。
+```
+bool CheckBox(int net[], int n){
+    // 确定开关盒是否可布线
+    Stack<int> * s = new Stack<int>(n);
+    // 顺时针扫描各网组
+    for (int i = 0; i < n; i++){
+        if (!s->IsEmpty()){
+            if (net[i] == net[s->Top()]){
+                // net[i]可以布线，从堆栈中删除
+                int x;
+                s->Delete(x);
+            }
+            else{
+                s->Add(i);
+            }
+        }
+        else{
+            s->Add(i);
+        }
+    }
+    // 是否有不可布线的网组
+    if (s->IsEmpty()){
+        delete s;
+        cout << "Switch box is routable\n";
+        return true;
+    }
+    delete s;
+    cout << "Switch box is not routable\n";
+    return false;
+}
+```
+
+测试例子如下，其中`net1`就是上述图c的例子，而`net2`则是刚说的反例。
+```
+int main(){
+    int net1[] = { 1, 2, 2, 1, 3, 3, 4, 4 };
+    CheckBox(net1, 8);
+    int net2[] = { 1, 2, 2, 3, 1, 4, 3, 4 };
+    CheckBox(net2, 8);
+
+    system("pause");
+    return 0;
+}
+```
 

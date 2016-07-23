@@ -50,6 +50,12 @@
 相关知识点笔记:
 
 1. [堆栈1--基本概念及实现方法](http://ccc013.github.io/2016/07/12/%E5%A0%86%E6%A0%881-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/)
+2. [堆栈2-应用](http://ccc013.github.io/2016/07/21/%E5%A0%86%E6%A0%882-%E5%BA%94%E7%94%A81/)
+
+
+#### 队列
+
+1. [队列--数组实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Queue/Queue.h)
 
 
 

@@ -187,11 +187,45 @@ bool Railroad(int p[], int n, int k){
 	return true;
 }
 
+bool CheckBox(int net[], int n){
+	// 确定开关盒是否可布线
+	Stack<int> * s = new Stack<int>(n);
+	// 顺时针扫描各网组
+	for (int i = 0; i < n; i++){
+		if (!s->IsEmpty()){
+			if (net[i] == net[s->Top()]){
+				// net[i]可以布线，从堆栈中删除
+				int x;
+				s->Delete(x);
+			}
+			else{
+				s->Add(i);
+			}
+		}
+		else{
+			s->Add(i);
+		}
+	}
+	// 是否有不可布线的网组
+	if (s->IsEmpty()){
+		delete s;
+		cout << "Switch box is routable\n";
+		return true;
+	}
+	delete s;
+	cout << "Switch box is not routable\n";
+	return false;
+}
 
 int main(){
 
-	int p[] = {0,3,6,9,2,4,7,1,8,5};
-	Railroad(p, 9, 9);
+	/*int p[] = {0,3,6,9,2,4,7,1,8,5};
+	Railroad(p, 9, 9);*/
+
+	int net1[] = { 1, 2, 2, 1, 3, 3, 4, 4 };
+	CheckBox(net1, 8);
+	int net2[] = { 1, 2, 2, 3, 1, 4, 3, 4 };
+	CheckBox(net2, 8);
 
 	system("pause");
 	return 0;
