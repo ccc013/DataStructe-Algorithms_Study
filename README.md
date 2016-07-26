@@ -62,5 +62,9 @@
 
 1.[队列1--基本概念及实现方法](http://ccc013.github.io/2016/07/23/%E9%98%9F%E5%88%971-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/)
 
+#### 跳表和散列
+
+1.[字典--链表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/SortedChain.h)
+
 
 

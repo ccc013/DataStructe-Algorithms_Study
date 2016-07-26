@@ -10,7 +10,7 @@ using std::cin;
 void testSortedChain(){
 	SortedChain<int, int> sC;
 	for (int i = 0; i < 10; i++)
-		sC.DistinctInsert(i * 2 + 5);
+		sC.DistinctInsert(i*i,i * 2 + 5);
 	cout << sC;
 	cout << "Length = " << sC.Length() << endl;
 	
@@ -24,7 +24,7 @@ void testSortedChain(){
 	cout << sC;
 	cout << "Length = " << sC.Length() << endl;
 	for (int i = 10; i <15; i++)
-		sC.DistinctInsert(i*2 + 5);
+		sC.DistinctInsert(i*i,i*2 + 5);
 	cout << sC;
 	cout << "Length = " << sC.Length() << endl;
 }
