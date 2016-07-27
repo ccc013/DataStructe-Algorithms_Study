@@ -2,6 +2,7 @@
 #include<ctime>
 #include"xcept.h"
 #include"SortedChain.h"
+#include"SkipList.h"
 
 using std::cout;
 using std::endl;
@@ -29,9 +30,23 @@ void testSortedChain(){
 	cout << "Length = " << sC.Length() << endl;
 }
 
+void testSkipList(){
+	SkipList<int, int> sk(100);
+	for (int i = 0; i < 12; i++)
+		sk.Insert(i * 2 + 2);
+	cout << sk;
+	int e;
+	int k = 12;
+	sk.Search(k, e);
+	cout << "search " << k << " in skiplist, get e = " << e << "\n";
+	sk.Delete(k, e);
+	cout << "delete " << k << "\n";
+	cout << sk;
+}
+
 int main(){
 
-	testSortedChain();
+	testSkipList();
 
 	system("pause");
 	return 0;
