@@ -3,6 +3,7 @@
 #include"xcept.h"
 #include"SortedChain.h"
 #include"SkipList.h"
+#include"HashTable.h"
 
 using std::cout;
 using std::endl;
@@ -44,9 +45,34 @@ void testSkipList(){
 	cout << sk;
 }
 
+void testHashTable(){
+	HashTable<int, int> h(11);
+	h.Insert(80);
+	h.Insert(40);
+	h.Insert(65);
+	cout << h;
+	h.Insert(24);
+	h.Insert(58);
+	h.Insert(35);
+	h.Insert(48);
+	h.Insert(98);
+	cout << h;
+	int e;
+	cout << "Search 58\n";
+	h.Search(58, e);
+	cout << e << endl;
+	h.Delete(80, e);
+	cout << "Delete 80\n" << h;
+	cout << "Search 80\n";
+	h.Search(80, e);
+	cout << "Search 58 again\n";
+	h.Search(58, e);
+	cout << e << endl;
+}
+
 int main(){
 
-	testSkipList();
+	testHashTable();
 
 	system("pause");
 	return 0;

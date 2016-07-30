@@ -66,6 +66,7 @@
 
 1.[字典--链表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/SortedChain.h)
 2.[跳表](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/SkipList.h)
+3.[字典--哈希表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/HashTable.h)
 
 相关知识点笔记:
 
