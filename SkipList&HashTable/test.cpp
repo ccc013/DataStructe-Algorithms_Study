@@ -4,6 +4,7 @@
 #include"SortedChain.h"
 #include"SkipList.h"
 #include"HashTable.h"
+#include"ChainHashTable.h"
 
 using std::cout;
 using std::endl;
@@ -70,9 +71,29 @@ void testHashTable(){
 	cout << e << endl;
 }
 
+void testChainHashTable(){
+	ChainHashTable<int, int> ht(11);
+	for (int i = 0; i <= 10; i++){
+		int e = i * 2 + 10;
+		ht.Insert(i, e);
+	}
+	cout << ht;
+	int e;
+	ht.Delete(5, e);
+	cout << "delete key = " << 5 << ", value = " << e << "\n";
+	cout << ht;
+	ht.Search(10, e);
+	cout << "search key = " << 10 << ", value = " << e << "\n";
+	for (int i = 0; i < 10; i++){
+		int e = i * 3 + 10;
+		ht.Insert(i, e);
+	}
+	cout << ht;
+}
+
 int main(){
 
-	testHashTable();
+	testChainHashTable();
 
 	system("pause");
 	return 0;
