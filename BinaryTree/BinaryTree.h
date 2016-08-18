@@ -102,6 +102,7 @@ void LevelOrder(BinaryTreeNode<T>* t){
 	}
 }
 
+int _count;
 /*类BinaryTree*/
 template<class T>
 class BinaryTree{
@@ -110,6 +111,16 @@ private:
 	void PreOrder(void(*Visit)(BinaryTreeNode<T>*u), BinaryTreeNode<T>* t);
 	void Inorder(void(*Visit)(BinaryTreeNode<T>*u), BinaryTreeNode<T>* t);
 	void PostOrder(void(*Visit)(BinaryTreeNode<T>*u), BinaryTreeNode<T>* t);
+	static void Output(BinaryTreeNode<T>*t){
+		cout << t->data << ", ";
+	}
+	static void Free(BinaryTreeNode<T>* t){
+		delete t;
+	}
+	int Height(BinaryTreeNode<T>* t)const;
+	static void Add1(BinaryTreeNode<T>* t){
+		_count++;
+	}
 public:
 	BinaryTree(){ root = 0; }
 	~BinaryTree(){};
@@ -129,7 +140,38 @@ public:
 		PostOrder(Visit, root);
 	}
 	void LevelOrder(void(*Visit)(BinaryTreeNode<T>*u));
-
+	// 输出函数
+	void PreOutput(){
+		PreOrder(Output, root);
+		cout << endl;
+	}
+	void InOutput(){
+		Inorder(Output, root);
+		cout << endl;
+	}
+	void PostOutput(){
+		PostOrder(Output, root);
+		cout << endl;
+	}
+	void LevelOutput(){
+		LevelOrder(Output);
+		cout << endl;
+	}
+	// 删除函数
+	void Delete(){
+		PostOrder(Free, root);
+		root = 0;
+	}
+	// 计算高度
+	int Height() const{
+		return Height(root);
+	}
+	// 统计节点数
+	int Size(){
+		_count = 0;
+		PreOrder(Add1, root);
+		return _count;
+	}
 };
 
 template<class T>
@@ -223,4 +265,18 @@ void BinaryTree<T>::LevelOrder(void(*Visit)(BinaryTreeNode<T>* u)){
 	}
 }
 
+template<class T>
+int BinaryTree<T>::Height(BinaryTreeNode<T> *t)const{
+	// 返回树*t的高度
+	if (!t)
+		return 0;
+	// 左子树高度
+	int hl = Height(t->LeftChild);
+	// 右子树的高度
+	int hr = Height(t->RightChild);
+	if (hl > hr)
+		return ++hl;
+	else
+		return ++hr;
+}
 #endif
