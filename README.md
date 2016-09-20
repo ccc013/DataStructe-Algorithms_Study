@@ -85,3 +85,13 @@
 1. [最大堆的实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/PriorityQueue/MaxHeap.h)
 2. [最大高度优先左高树的实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/PriorityQueue/MaxHBLT.h)
 
+相关知识点笔记:
+1. [优先队列1--堆](http://ccc013.github.io/2016/08/23/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%971-%E5%A0%86/)
+2. [优先队列2-左高树](http://ccc013.github.io/2016/08/24/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%972-%E5%B7%A6%E9%AB%98%E6%A0%91/)
+
+#### 搜索树
+
+1. [二叉搜索树](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SearchTrees/BSTree.h)
+
+相关知识点笔记:
+1. [搜索树1-二叉搜索树](http://ccc013.github.io/2016/08/31/%E6%90%9C%E7%B4%A2%E6%A0%911-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/)
