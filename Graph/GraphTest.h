@@ -3,8 +3,12 @@
 #include<iostream>
 
 template<class T>
+class AdjacencyWGraph;
+
+// 加权有向图的耗费邻接矩阵类
+template<class T>
 class AdjacencyWDigraph{
-	//friend AdjacencyWGraph<T>;
+	friend AdjacencyWGraph<T>;
 private:
 	T NoEdge;	// 用于没有边存在的情形
 	int n;			// 顶点数目
@@ -127,5 +131,53 @@ std::ostream& operator<<(std::ostream& out, AdjacencyWDigraph<T>& x){
 	x.Output(out);
 	return out;
 }
+
+// 加权图的耗费邻接矩阵类
+template<class T>
+class AdjacencyWGraph : public AdjacencyWDigraph<T>{
+public:
+	AdjacencyWGraph(int Vertices = 10, T noEdge = 0) : AdjacencyWDigraph<T>(Vertices, noEdge){}
+	AdjacencyWGraph<T>& Add(int i, int j, const T& w){
+		AdjacencyWDigraph<T>::Add(i, j, w);
+		a[j][i] = w;
+		return *this;
+	}
+	AdjacencyWGraph<T>& Delete(int i, int j){
+		AdjacencyWDigraph<T>::Delete(i, j);
+		a[j][i] = NoEdge;
+		return *this;
+	}
+	int Degree(int i) const{ return OutDegree(i); }
+};
+
+// 有向图的邻接矩阵类
+class AdjacencyDigraph : public AdjacencyWDigraph<int>{
+public:
+	AdjacencyDigraph(int Vertices = 0) : AdjacencyWDigraph<int>(Vertices, 0){}
+	AdjacencyDigraph& Add(int i, int j){
+		AdjacencyWDigraph<int>::Add(i, j, 1);
+		return *this;
+	}
+	AdjacencyDigraph& Delete(int i, int j){
+		AdjacencyWDigraph<int>::Delete(i, j);
+		return *this;
+	}
+};
+
+// 图的邻接矩阵
+class AdjacencyGraph : public AdjacencyWGraph<int>{
+public :
+	AdjacencyGraph(int Vertices = 10) : AdjacencyWGraph<int>(Vertices, 0) {}
+	AdjacencyGraph& Add(int i, int j)
+	{
+		AdjacencyWGraph<int> :: Add(i, j, 1);
+		return *this;
+	}
+	AdjacencyGraph& Delete(int i, int j)
+	{
+		AdjacencyWGraph<int> :: Delete(i, j);
+		return *this;
+	}
+};
 
 #endif
