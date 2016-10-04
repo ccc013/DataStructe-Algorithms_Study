@@ -95,3 +95,17 @@
 
 相关知识点笔记:
 1. [搜索树1-二叉搜索树](http://ccc013.github.io/2016/08/31/%E6%90%9C%E7%B4%A2%E6%A0%911-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/)
+
+
+### 算法
+
+算法目前记录了在[hihocoder](http://hihocoder.com/problemset)上的练习题，这个网站上的练习题按照难度分成从简单到难的level1到level5，目前主要是从简单的level1做起，记录做过的题目和成功提交的代码实现。
+
+目前做过的题目如下：
+
+#### level1
+
+1. [A+B](http://hihocoder.com/problemset/problem/1000)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
+2. [字符消除](http://hihocoder.com/problemset/problem/1039)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
+3. [补提交卡](http://hihocoder.com/problemset/problem/1051)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
+
