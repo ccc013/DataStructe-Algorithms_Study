@@ -108,4 +108,5 @@
 1. [A+B](http://hihocoder.com/problemset/problem/1000)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
 2. [字符消除](http://hihocoder.com/problemset/problem/1039)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
 3. [补提交卡](http://hihocoder.com/problemset/problem/1051)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
+4. [然而沼跃鱼早就看穿了一切](http://hihocoder.com/problemset/problem/1082)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md)
 
