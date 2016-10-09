@@ -1,4 +1,4 @@
-﻿# 算法练习1
+﻿# AlgorithmsPractises1
 
 标签（空格分隔）： 算法
 
