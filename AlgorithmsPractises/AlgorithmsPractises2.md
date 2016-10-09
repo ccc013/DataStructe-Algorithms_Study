@@ -6,7 +6,7 @@
 
 记录算法练习中的练习题以及实现的代码，练习题主要是来自[Hihocoder][1]。主要还是按照级别，由简单到难的顺序练习。
 
-这是接着[算法练习1][2]的练习题。
+这是接着[AlgorithmsPractises1][2]的练习题。
 
 ##### 题5 Magic Box
   第五题来自[Magic Box][3]，题目描述如下：
@@ -108,7 +108,7 @@ int main(){
 
 
   [1]: http://hihocoder.com/problemset
-  [2]: https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A01.md
+  [2]: https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md
   [3]: http://hihocoder.com/problemset/problem/1135
   [4]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm71.png
   [5]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm72.png
