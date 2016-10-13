@@ -1,3 +1,5 @@
+
+
 # AlgorithmsPractises2
 
 标签（空格分隔）： 算法
@@ -169,6 +171,145 @@ public:
 ```
 
 对于算法题，首先当然要能解决问题，即能输出期望的结果，然后就要考虑时间复杂度的问题，尽可能使用更短的时间和更少的内存解决问题。
+
+##### 题8 [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
+
+第八题来自`LeetCode`，描述如下：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/algorithm9.png)
+
+这道题目是用单链表来存储非负整数，并且相加的时候，如果结果大于10，需要进位。
+
+实现代码如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int add = 0;
+        ListNode* res = new ListNode(0);
+        ListNode *p,*r;
+        r = res;
+        while(l1 || l2 || add){
+            p = new ListNode(add);
+            if(l1){
+                p->val += l1->val;
+                l1 = l1->next;
+            }
+            if(l2){
+                p->val += l2->val;
+                l2 = l2->next;
+            }
+            add = p->val / 10;
+            p->val %= 10;
+           
+            r->next = p;
+            r = p; 
+        }
+        
+        return res->next;
+    }
+```
+这里首先要了解单链表的使用，需要先创建一个头结点，然后创建一个链表指针，并且这里还要注意输入的两个链表长度可以是不一样的。
+
+同时在讨论区看到一个实现方法更加简洁，并且更加快的[代码](https://discuss.leetcode.com/topic/53268/efficient-and-clean-iterative-and-recursive-solutions-in-c)：
+
+```c++
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
+    {
+        int c = 0;
+        ListNode newHead(0);
+        ListNode *t = &newHead;
+        while(c || l1 || l2)
+        {
+            c += (l1? l1->val : 0) + (l2? l2->val : 0);
+            t->next = new ListNode(c%10);
+            t = t->next;
+            c /= 10;
+            if(l1) l1 = l1->next;
+            if(l2) l2 = l2->next;
+        }
+        return newHead.next;
+    }
+};
+```
+
+##### 题9 [ZigZag Conversion](https://leetcode.com/problems/zigzag-conversion/) 
+
+第九题继续来自`LeetCode`,题目描述如下：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/algorithm10.png)
+
+这道题目是将输入的字符串按照`Z`字形排列，然后逐行打印出来，需要找规律。在第一行和最后一行，每个字符相差`2*nRows-2`，而在中间的每行中，都会还有一个字符要相加，相差的就是`2*(nRows-i)-2`，即如题目给出的例子中，中间一行，`A`和`P`的差距是`2*(3-1)-2 = 2`,`A`的索引值是1，而`P`的索引值是3，然后`L`和`S`的差距也是2。因此实现的代码如下：
+
+```c++
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        int len = s.size();
+        if (len <=1 || numRows < 2)
+            return s;
+        
+        // 行的循环周期
+        int cyc = 2*numRows - 2;
+        string res;
+        for(int i=0;i<numRows;i++){
+            for(int j=i;j<len;j += cyc){
+                res += s[j];
+                
+                // 非首行和末行要多加一个
+                if(i>0 && i< numRows - 1){
+                    int t = j + cyc - 2*i;
+                    if(t<len){
+                        res+= s[t];
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+这道题目关键点还是找到每行的字符索引的差值的规律，特别是注意非首行和末行的字符。
+
+
+
+##### 题10 [Reverse Integer](https://leetcode.com/problems/reverse-integer/)
+
+题目描述如下：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/algorithm11.png)
+
+这道题目是将输入的整数要反转输出，需要注意这里输入的整数是`int`类型，它是一个32位数，会有溢出的情况，其最大值`INT_MAX = 2147483647`，最小值`INT_MIN=-2147483647`。
+
+```c++
+class Solution {
+public:
+    int reverse(int x) {
+        long result = 0;
+        while(x != 0){
+            result = result * 10 + x % 10;
+            if(result > INT_MAX || result < INT_MIN)
+                return 0;
+            x = x / 10;
+        }
+        return result;
+    }
+};
+```
+一开始做的时候没有将代码中的`result`设置为`long`类型，而是设置为`int`类型，所以遇到输入值是`1147483647`这种正常是不会溢出，但是倒过来后就溢出的测试值，总是出错，而且输出值也很奇怪，然后才发现是因为`result`已经溢出了。
+
+
 
 
 
