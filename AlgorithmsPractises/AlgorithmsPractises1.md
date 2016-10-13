@@ -1,16 +1,20 @@
-﻿# AlgorithmsPractises1
+# AlgorithmsPractises1
 
 标签（空格分隔）： 算法
 
 ---
 
-记录算法练习中的练习题以及实现的代码，练习题主要是来自[Hihocoder][1]。主要还是按照级别，由简单到难的顺序练习。
+记录算法练习中的练习题以及实现的代码，练习题主要是来自[Hihocoder][1]和LeetCode](https://leetcode.com/problemset/algorithms/)。主要还是按照级别，由简单到难的顺序练习。
+
+下面5道题目主要是来自[Hihocoder][1]。
+
+------
 
 ##### 题1 A+B
   第一题来自[A + B][2]，输入两个整数，输出其相加的结果。题目描述如下：
-  
+
   ![此处输入图片的描述][3]
-  
+
   实现的代码如下：
 ```
 #include<iostream>
@@ -31,13 +35,13 @@ int main(){
 
 ##### 题2 字符消除
   第二题是[字符消除][4]，描述如下：
-  
+
   ![此处输入图片的描述][5]
-  
+
   ![此处输入图片的描述][6]
-  
+
   这道题目一开始打算使用`char`数组，但是感觉还是不如使用`string`类方面，最终实现代码如下：
-  
+
 ```
 #include<iostream>
 #include<string>
@@ -129,9 +133,9 @@ int main(){
 
 ##### 题3 补提交卡
   第三题是[补提交卡][7]，描述如下：
-  
+
   ![此处输入图片的描述][8]
-  
+
   实现代码如下：
 ```
 #include<iostream>
@@ -187,11 +191,11 @@ int main(){
 
 ##### 题4 然而沼跃鱼早就看穿了一切
   第四题来自[然而沼跃鱼早就看穿了一切][9]，其描述如下：
-  
+
   ![此处输入图片的描述][10]
-  
+
   ![此处输入图片的描述][11]
-  
+
   实现的代码如下所示：
 ```
 #include<iostream>
@@ -270,12 +274,12 @@ int main(){
 
 ##### 题5 Lost in the City
   第五题来自[Lost in the City][13]，描述如下：
-  
+
   ![此处输入图片的描述][14]
   ![此处输入图片的描述][15]
-  
+
   题目的大致意思是需要输入一个$N \times M$大小的数组，然后再输入3行字符串，每行3个字符，表示的是 Little Hi 所在位置周围的建筑物，这里用的是字母'A'-'Z'和'.'表示的建筑物，并且由于方向也是不知道的，所以比较的时候需要转换这3行字符串的位置。
-  
+
   实现的代码如下：
 ```
 #include<iostream>
@@ -345,18 +349,18 @@ int main(){
 
 
 
-  [1]: http://hihocoder.com/problemset
-  [2]: http://hihocoder.com/problemset/problem/1000
-  [3]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm1.png
-  [4]: http://hihocoder.com/problemset/problem/1039
-  [5]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm2.png
-  [6]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm3.png
-  [7]: http://hihocoder.com/problemset/problem/1051
-  [8]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm4.png
-  [9]: http://hihocoder.com/problemset/problem/1082
-  [10]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm51.png
-  [11]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm52.png
-  [12]: http://www.cnblogs.com/xFreedom/archive/2011/05/16/2048037.html
-  [13]: http://hihocoder.com/problemset/problem/1094
-  [14]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm61.png
-  [15]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm62.png
+[1]: http://hihocoder.com/problemset
+[2]: http://hihocoder.com/problemset/problem/1000
+[3]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm1.png
+[4]: http://hihocoder.com/problemset/problem/1039
+[5]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm2.png
+[6]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm3.png
+[7]: http://hihocoder.com/problemset/problem/1051
+[8]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm4.png
+[9]: http://hihocoder.com/problemset/problem/1082
+[10]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm51.png
+[11]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm52.png
+[12]: http://www.cnblogs.com/xFreedom/archive/2011/05/16/2048037.html
+[13]: http://hihocoder.com/problemset/problem/1094
+[14]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm61.png
+[15]: http://7xrluf.com1.z0.glb.clouddn.com/algorithm62.png
