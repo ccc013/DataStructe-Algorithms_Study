@@ -1,5 +1,3 @@
-
-
 # AlgorithmsPractises2
 
 标签（空格分隔）： 算法
@@ -309,9 +307,110 @@ public:
 ```
 一开始做的时候没有将代码中的`result`设置为`long`类型，而是设置为`int`类型，所以遇到输入值是`1147483647`这种正常是不会溢出，但是倒过来后就溢出的测试值，总是出错，而且输出值也很奇怪，然后才发现是因为`result`已经溢出了。
 
+不过上述代码的运行时间依然还是需要约9ms，而如果对整数进行正负的判断，则可以提高运行时间到约6ms.
 
+```c++
+class Solution {
+public:
+    int reverse(int x) {
+        long result = 0;
+        bool flag = false;
+        if(x < 0){
+            x = -x;
+            flag = true;
+        }
+        while(x != 0){
+            result = result * 10 + x % 10;
+            if(result > INT_MAX || result < INT_MIN)
+                return 0;
+            x = x / 10;
+        }
+        if(flag)
+            result = -result;
+        return result;
+    }
+};
+```
 
+##### 题11 [Remove Element](https://leetcode.com/problems/remove-element/)
 
+第六题的题目描述如下：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/algorithm12.png)
+
+给定一个数组和一个数值，要求是数组在去除给定的数值后，返回新的数组的长度。这里要求不能使用另一个数组，即对存储空间有要求，然后元素的顺序可以改变。实现代码如下：
+
+```c++
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int len = nums.size();
+        // 非目标数值的数量
+        int j = 0;
+        for(int i=0;i<len;i++){
+            if(nums[i] != val)
+                nums[j++] = nums[i];
+        }
+        return j;
+    }
+};
+```
+
+这题使用一个额外的`j`作为表示保留的数组元素的个数。
+
+##### 题12 [Rotate Array](https://leetcode.com/problems/rotate-array/)
+
+题目描述如下：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/algorithm13.png)
+
+这道题目就是根据输入的`k`值移动数组的元素，其实比较简单，难点是能否只在空间复杂度是$O(1)$的情况下完成，即不需要使用额外的数组。
+
+我的第一种实现，采用一个额外的数组进行辅助：
+
+```c++
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int lens = nums.size();
+        vector<int> tmp = nums;
+        for(int i=0;i<lens;i++){
+            nums[(i+k)%lens] = tmp[i];
+        }
+    }
+};
+```
+
+这种实现方法优点是时间更快，根据提交后的结果显示，耗时16ms，在所有提交的C++版本中排在前5%左右，缺点就是需要$O(n)$的存储空间。
+
+下面则是给出不需要额外的辅助空间，但是耗时相对较长的实现方案：
+
+```c++
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int lens = nums.size();
+        int rotated = 0;
+        for(int i=0;i<k;i++){
+            int start = i;
+            int startVal = nums[start];
+            int to = 0;
+            do{
+                to = (start + k) % lens;
+                int tmp = nums[to];
+                nums[to] = startVal;
+                // 保存被替换位置的元素和索引
+                start = to;
+                startVal = tmp;
+                rotated++;
+            }while(start != i);
+            if(rotated == lens)
+                break;
+        }
+    }
+};
+```
+这种实现方法耗时19ms,排名前40%左右。实现的思路是根据输入的`k`可以知道实际上有前k个数组元素需要向右进行移动，所以最外层的循环是循环`k`次，然后每次循环中，根据`(start + k) % lens`找到每个元素移动到的新位置，然后保存该位置的索引值和元素值，作为`while`循环的下一次循环使用；然后用一个变量`rotated`记录进行移动的元素个数，当它等于数组长度时，表示所有的数组元素都经过一次移动，可以终止整个函数了。
 
 [1]: http://hihocoder.com/problemset
 [2]: https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md
