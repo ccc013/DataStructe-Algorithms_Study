@@ -112,3 +112,25 @@
 5. [Lost in the City](http://hihocoder.com/problemset/problem/1094)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
 6. [Magic Box](http://hihocoder.com/problemset/problem/1135) --[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises2.md)
 
+
+
+
+接下来是在[LeetCode](https://leetcode.com/problems/)上做过的题目，这里主要分不同专题来做，如链表，树等类型。
+
+做的题目如下：
+
+#### [链表](https://leetcode.com/tag/linked-list/)
+
+1. [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+2. [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+3. [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+4. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+5. [Delete Node in a Linked List](https://leetcode.com/problems/delete-node-in-a-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+6. [Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+
+7. [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
