@@ -7,8 +7,8 @@ using std::endl;
 using std::cin;
 
 typedef struct{
-	// 存储待排序数组，r[0]用作哨兵或临时变量
-	int r[MAXSIZE + 1];
+	// 存储待排序数组
+	int r[MAXSIZE];
 	int length;
 }SqList;
 
@@ -22,8 +22,8 @@ void swap(SqList *L, int i, int j){
 // 冒泡排序初级版
 void BubbleSort0(SqList *L){
 	int i, j;
-	for (i = 1; i < L->length; i++) {
-		for (j = i + 1; j <= L->length; j++){
+	for (i = 0; i < L->length-1; i++) {
+		for (j = i + 1; j <= L->length-1; j++){
 			if (L->r[i] > L->r[j]){
 				// 实现递增排序
 				swap(L, i, j);
@@ -35,8 +35,8 @@ void BubbleSort0(SqList *L){
 // 正宗的冒泡排序算法实现代码
 void BubbleSort(SqList *L){
 	int i, j;
-	for (i = 1; i < L->length; i++) {
-		for (j = L->length - 1; j >= i; j--){
+	for (i = 0; i < L->length; i++) {
+		for (j = L->length-2; j >= i; j--){
 			// j是从后往前循环
 			if (L->r[j] > L->r[j + 1]){
 				// 实现递增排序
@@ -50,10 +50,10 @@ void BubbleSort(SqList *L){
 void BubbleSortOptimz(SqList *L){
 	int i, j;
 	bool flag = true;
-	for (int i = 1; i < L->length && flag; i++){
+	for (int i = 0; i < L->length && flag; i++){
 		// 若 flag为false则退出循环
 		flag = false;
-		for (j = L->length - 1; j >= i; j--){
+		for (j = L->length-2; j >= i; j--){
 			// j是从后往前循环
 			if (L->r[j] > L->r[j + 1]){
 				// 实现递增排序
@@ -71,22 +71,22 @@ int main(void){
 	int a[] = { 9, 1, 5, 8, 3, 7, 4, 6, 2 };
 	int length = 9;
 	l.length = length;
-	for (int i = 1; i <= length; i++){
-		l.r[i] = a[i - 1];
+	for (int i = 0; i < length; i++){
+		l.r[i] = a[i];
 	}
 	cout << "original: ";
-	for (int i = 1; i <= length; i++){
+	for (int i = 0; i < length; i++){
 		cout << l.r[i];
-		if (i == length)
+		if (i == length-1)
 			cout << "\n";
 		else
 			cout<< ", ";
 	}
 	BubbleSortOptimz(&l);
 	cout << "After sorting: ";
-	for (int i = 1; i <= length; i++){
+	for (int i = 0; i < length; i++){
 		cout << l.r[i];
-		if (i == length)
+		if (i == length-1)
 			cout << "\n";
 		else
 			cout << ", ";
