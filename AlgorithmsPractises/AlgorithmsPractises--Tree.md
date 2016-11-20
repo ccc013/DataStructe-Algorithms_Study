@@ -265,8 +265,6 @@ public:
 
 题目描述如下：
 
-> 
->
 > Given a binary tree, return the *level order* traversal of its nodes' values. (ie, from left to right, level by level).
 >
 > For example:
@@ -509,3 +507,99 @@ if(sum<0)
 ```
 
 但是因为是有负数的可能，所以就删除上面这段代码，最终第三次成功提交。果然还是需要好好看题，思考要更加周全点。
+
+##### 9.[Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+题目描述如下：
+
+> Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+>
+> According to the [definition of LCA on Wikipedia](https://en.wikipedia.org/wiki/Lowest_common_ancestor): “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow **a node to be a descendant of itself**).”
+>
+> ```
+>         _______6______
+>        /              \
+>     ___2__          ___8__
+>    /      \        /      \
+>    0      _4       7       9
+>          /  \
+>          3   5
+>
+> ```
+>
+> For example, the lowest common ancestor (LCA) of nodes `2` and `8` is `6`. Another example is LCA of nodes `2` and `4` is `2`, since a node can be a descendant of itself according to the LCA definition.
+
+题目的意思是寻找两个给定结点的最近祖先，其中这个最近祖先可以是给定的两个结点之一。
+
+在参考了别人的实现方法后，得到的实现代码如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == NULL || root->val == p->val || root->val == q->val ||
+        (p->val < root->val && q->val > root->val) ||
+        (q->val < root->val && p->val > root->val))
+            return root;
+        else if (root->val > p->val)
+            return lowestCommonAncestor(root->left, p, q);
+        else
+            return lowestCommonAncestor(root->right, p, q);
+    }
+};
+```
+
+这里首先判断如果是空树，或者当前结点`root`等于给定的两个结点之一，或者是当前结点刚好是处于给定结点的中间值，都可以认为当前结点是所求值，而如果不满足这几个条件，那么再根据当前结点和任意一个给定结点的大小来判断是往左子树结点还是右子树结点进行查找。这个也是因为所求的是二叉查找树，每个结点和其左右孩子结点的大小是排序好的。
+
+##### 10.[Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+
+题目描述如下：
+
+> Given a binary tree, find its minimum depth.
+>
+> The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
+题目是要查找二叉树中最小的深度。
+
+实现代码如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root == NULL)
+            return 0;
+        int lval = minDepth(root->left) + 1;
+        int rval = minDepth(root->right) + 1;
+        if (lval <= 1 )
+            return rval;
+        else if (rval <= 1)
+            return lval;
+        else
+            return (lval < rval)? lval : rval;
+    }
+};
+```
+
+这里前面四行代码跟求最大深度的代码是一样的，都是先得到结点的左右子树的深度，然后增加了判断左右子树 的深度是否为小于等于1，因为一开始返回的条件是当前结点是空结点，如果得到的深度是1，那就只有一种情况，这个结点是根结点，否则是不会得到只有深度为1的结果的。
+
+
+
