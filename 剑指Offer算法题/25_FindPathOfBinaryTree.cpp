@@ -84,7 +84,6 @@ BinaryTreeNode* constructTree(BinaryTreeNode* pTreeRoot, int a[], int length){
 	return pTreeRoot;
 }
 
-
 // 测试
 int main(void){
 	// 只有一条路径
