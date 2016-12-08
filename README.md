@@ -146,3 +146,4 @@
 5. [堆排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/HeapSortTest.cpp)
 6. [归并排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/MergeSortTest.cpp)
 7. [快速排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/QuickSortTest.cpp)
+8. [桶排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/BucketSort.cpp)
