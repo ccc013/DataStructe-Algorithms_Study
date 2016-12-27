@@ -601,5 +601,178 @@ public:
 
 这里前面四行代码跟求最大深度的代码是一样的，都是先得到结点的左右子树的深度，然后增加了判断左右子树 的深度是否为小于等于1，因为一开始返回的条件是当前结点是空结点，如果得到的深度是1，那就只有一种情况，这个结点是根结点，否则是不会得到只有深度为1的结果的。
 
+##### 11 [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/)
 
+题目如下：
+
+> Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+>
+> For example, this binary tree `[1,2,2,3,4,4,3]` is symmetric:
+>
+> ```
+>     1
+>    / \
+>   2   2
+>  / \ / \
+> 3  4 4  3
+> ```
+>
+> But the following `[1,2,2,null,3,null,3]` is not:
+>
+> ```
+>     1
+>    / \
+>   2   2
+>    \   \
+>    3    3
+> ```
+
+这是一道判断二叉树是否是对称的题目，解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        return isSymmetric(root, root);
+    }
+    
+    bool isSymmetric(TreeNode* pNode1, TreeNode* pNode2){
+        if(pNode1 == NULL && pNode2 == NULL)
+            return true;
+        
+        if(pNode1 == NULL || pNode2 == NULL)
+            return false;
+        
+        if(pNode1->val != pNode2->val)
+            return false;
+        
+        return isSymmetric(pNode1->left, pNode2->right) && 
+                isSymmetric(pNode1->right, pNode2->left);
+    }
+};
+```
+
+这是采用前序遍历的方法，而且是比较正常的前序遍历和对称前序遍历的序列是否相同来进行判断，定义的函数`isSymmetric(TreeNode*, TreeNode*)`，就是进行这个判断，左边输入的是正常前序遍历时候的树结点，即先根结点，然后先左结点，再右结点的遍历二叉树，而右边就是对称前序遍历，同样是从根结点开始，接着就是先右结点，再左结点。
+
+##### 12 [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+题目描述如下：
+
+> Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+>
+> According to the [definition of LCA on Wikipedia](https://en.wikipedia.org/wiki/Lowest_common_ancestor): “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow **a node to be a descendant of itself**).”
+>
+> ```
+>         _______3______
+>        /              \
+>     ___5__          ___1__
+>    /      \        /      \
+>    6      _2       0       8
+>          /  \
+>          7   4
+> ```
+>
+> For example, the lowest common ancestor (LCA) of nodes `5` and `1` is `3`. Another example is LCA of nodes `5` and `4` is `5`, since a node can be a descendant of itself according to the LCA definition.
+
+这是求取二叉树中两个结点的最近的公共祖先。解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root == NULL || p == NULL || q == NULL)
+		    return NULL;
+    	list<TreeNode*> path1;
+    	GetNodePath(root, p, path1);
+    
+    	list<TreeNode*> path2;
+    	GetNodePath(root, q, path2);
+    
+    	return GetLastCommonNode(path1, path2);
+    }
+    // 寻找从根结点pRoot开始到达结点pNode的路径
+    bool GetNodePath(TreeNode* pRoot, TreeNode* pNode, list<TreeNode*>& path){
+        path.push_back(pRoot);
+    	if (pRoot == pNode)
+    		return true;
+    	bool found = false;
+    	
+    	if (!found && pRoot->left)
+    		found = GetNodePath(pRoot->left, pNode, path);
+    	if (!found && pRoot->right)
+    		found = GetNodePath(pRoot->right, pNode, path);
+    	
+    	if (!found)
+    		path.pop_back();
+    	return found;
+    }
+    // 寻找两个路径中的最后一个公共结点，也就是目标所求的公共祖先
+    TreeNode* GetLastCommonNode(const list<TreeNode*>& path1, const list<TreeNode*>& path2){
+    	list<TreeNode*>::const_iterator iterator1 = path1.begin();
+    	list<TreeNode*>::const_iterator iterator2 = path2.begin();
+    
+    	TreeNode* pLast = NULL;
+    	while (iterator1 != path1.end() && iterator2 != path2.end()){
+    		if (*iterator1 == *iterator2)
+    			pLast = *iterator1;
+    		iterator1++;
+    		iterator2++;
+    	}
+    	return pLast;
+    }
+};
+```
+
+上述解法是分别对二叉树进行遍历，找到每个结点，并且保存路径，然后再定义一个函数用于比较两个路径，寻找相同的结点，并返回。
+
+更短和更快的解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return dfsTraverse(root, p, q);
+    }
+    TreeNode * dfsTraverse(TreeNode * root, TreeNode * p , TreeNode * q)
+    {
+        if( root == p || root == q || root == NULL)
+            return root;
+        TreeNode * parent1 = dfsTraverse(root->left, p, q);
+        TreeNode * parent2 = dfsTraverse(root->right, p, q);
+        if( parent1 && parent2)
+            return root;
+        else
+            return parent1 ? parent1:parent2;
+    }
+};
+```
+
+这是一个前序遍历的思路，先判断当前结点是否跟任意一个给定结点相同，如果不同，则考虑其左右子结点，如果发现左右子结点都可以返回一个非空结点，那么当前结点就是要求的最近的公共祖先结点，如果有一个非空，那就是非空的结点为最近公共祖先结点。
 
