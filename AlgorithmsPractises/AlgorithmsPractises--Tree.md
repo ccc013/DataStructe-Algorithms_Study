@@ -776,3 +776,113 @@ public:
 
 这是一个前序遍历的思路，先判断当前结点是否跟任意一个给定结点相同，如果不同，则考虑其左右子结点，如果发现左右子结点都可以返回一个非空结点，那么当前结点就是要求的最近的公共祖先结点，如果有一个非空，那就是非空的结点为最近公共祖先结点。
 
+##### 13 [Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/)
+
+题目描述如下：
+
+> Given a binary tree, return all root-to-leaf paths.
+>
+> For example, given the following binary tree:
+>
+> ```
+>    1
+>  /   \
+> 2     3
+>  \
+>   5
+>
+> ```
+>
+> All root-to-leaf paths are:
+>
+> ```
+> ["1->2->5", "1->3"]
+> ```
+
+这是求取二叉树中根结点到叶节点的所有路径。实现代码如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> res;
+        if(root == NULL){
+            return res;
+        }
+        stack<TreeNode*> s;
+        stack<string> pathStack;
+        s.push(root);
+        pathStack.push(to_string(root->val));
+        
+        while (!s.empty()) {
+            TreeNode * curNode = s.top(); s.pop();
+            string tmpPath = pathStack.top(); pathStack.pop();
+            
+            if (curNode->left == NULL && curNode->right == NULL) {
+                res.push_back(tmpPath); continue;
+            }
+            
+            if (curNode->left != NULL) {
+                s.push(curNode->left);
+                pathStack.push(tmpPath + "->" + to_string(curNode->left->val));
+            }
+            
+            if (curNode->right != NULL) {
+                s.push(curNode->right);
+                pathStack.push(tmpPath + "->" + to_string(curNode->right->val));
+            }
+        }
+        
+        return res;
+    }
+};
+```
+
+上述代码是非递归版本，使用了两个辅助栈，一个栈用来存放结点，一个栈则是保存当前路径值。
+
+递归版本如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> res;
+        if (root == NULL) return res;
+        dfs(root, to_string(root->val), res);
+        return res;
+    }
+    
+    void dfs(TreeNode* root, string path, vector<string>& res) {
+        if (root->left == NULL && root->right == NULL) {
+            res.push_back(path);
+        }
+        
+        if (root->left != NULL)
+            dfs(root->left, path + "->" + to_string(root->left->val), res);
+        
+        if (root->right != NULL)
+            dfs(root->right, path + "->" + to_string(root->right->val), res);
+    }
+};
+```
+
+使用一个辅助函数实现。
+
