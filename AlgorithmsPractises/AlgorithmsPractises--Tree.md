@@ -886,3 +886,181 @@ public:
 
 使用一个辅助函数实现。
 
+##### 14 [Binary Tree Zigzag Level Order Traversal](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+
+题目描述如下：
+
+> Given a binary tree, return the *zigzag level order* traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+>
+> For example:
+> Given binary tree `[3,9,20,null,null,15,7]`,
+>
+> ```
+>     3
+>    / \
+>   9  20
+>     /  \
+>    15   7
+>
+> ```
+>
+> return its zigzag level order traversal as:
+>
+> ```
+> [
+>   [3],
+>   [20,9],
+>   [15,7]
+> ]
+>
+> ```
+
+这是打印二叉树，并且是以Z字形打印，即奇数层从左到右打印，偶数层从右到左打印，解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if(root == NULL){
+            return res;
+        }
+        stack<TreeNode*> levels[2];
+        int current = 0, next =1;
+        
+        levels[current].push(root);
+        int index = 0;
+        vector<int> temp;
+        res.push_back(temp);
+        while(!levels[0].empty() || !levels[1].empty()){
+            TreeNode* pNode = levels[current].top();
+            levels[current].pop();
+            res[index].push_back(pNode->val);
+            if (current == 0){
+    			// 当前是奇数层，先压入左子结点，再压入右子节点，则下一层的打印就是从右到左打印
+    			if (pNode->left != NULL)
+    				levels[next].push(pNode->left);
+    			if (pNode->right != NULL)
+    				levels[next].push(pNode->right);
+    		}
+    		else{
+    			// 当前是偶数层，先压入右子结点，再压入左子节点，所有下一层就是从左到右打印
+    			if (pNode->right != NULL)
+    				levels[next].push(pNode->right);
+    			if (pNode->left != NULL)
+    				levels[next].push(pNode->left);
+    		}
+    		// 当前层打印完毕
+    		if (levels[current].empty()){
+    			current = 1 - current;
+    			next = 1 - next;
+    			index++;
+    			vector<int> t;
+    			res.push_back(t);
+    		}
+        }
+        if(res[index].empty())
+            res.pop_back();
+        return res;
+    }
+};
+```
+
+使用栈进行辅助，并且定义两个栈，一个用来保存当前层未打印的结点，剩下的是保存下一层打印顺序的结点，并且保存下一层打印结点的时候要根据当前层是奇数还是偶数层来决定先将左子结点还是右子结点压入栈中。
+
+另一个解法，使用一个队列来解决，如下所示：
+
+```c++
+vector<vector<int> > zigzagLevelOrder(TreeNode* root) {
+    if (root == NULL) {
+        return vector<vector<int> > ();
+    }
+    vector<vector<int> > result;
+
+    queue<TreeNode*> nodesQueue;
+    nodesQueue.push(root);
+    bool leftToRight = true;
+
+    while ( !nodesQueue.empty()) {
+        int size = nodesQueue.size();
+        vector<int> row(size);
+        for (int i = 0; i < size; i++) {
+            TreeNode* node = nodesQueue.front();
+            nodesQueue.pop();
+
+            // find position to fill node's value
+            int index = (leftToRight) ? i : (size - 1 - i);
+
+            row[index] = node->val;
+            if (node->left) {
+                nodesQueue.push(node->left);
+            }
+            if (node->right) {
+                nodesQueue.push(node->right);
+            }
+        }
+        // after this level
+        leftToRight = !leftToRight;
+        result.push_back(row);
+    }
+    return result;
+}
+```
+
+上述解法只需要利用一个队列，然后就是增加一个bool变量来判断当前层是从左到右打印还是从右到左打印，从而决定将从队列取出结点是从队头开始，还是队尾。
+
+##### 15 [Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
+题目描述如下：
+
+> Given a binary search tree, write a function `kthSmallest` to find the **k**th smallest element in it.
+>
+> **Note: **
+> You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+
+这是求二叉搜索树第k小的元素，可以利用中序遍历，实现如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        if(root == NULL || k == 0)
+            return NULL;
+        TreeNode* pNode = getKthSmallest(root, k);
+        return pNode->val;
+    }
+    TreeNode* getKthSmallest(TreeNode* root, int& k){
+        TreeNode* target = NULL;
+        if(root->left != NULL)
+            target = getKthSmallest(root->left, k);
+        if(target == NULL){
+            if(k==1)
+                target = root;
+            k--;
+        }
+        if(target == NULL && root->right != NULL)
+            target = getKthSmallest(root->right, k);
+        return target;
+    }
+};
+```
+
+中序遍历得到的序列就是一个递增的序列。
