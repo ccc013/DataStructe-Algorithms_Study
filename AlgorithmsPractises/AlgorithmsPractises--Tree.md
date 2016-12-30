@@ -1064,3 +1064,134 @@ public:
 ```
 
 中序遍历得到的序列就是一个递增的序列。
+
+##### 16 [Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+
+题目描述如下：
+
+> Given a binary tree, return the *inorder* traversal of its nodes' values.
+>
+> For example:
+> Given binary tree `[1,null,2,3]`,
+>
+> ```
+>    1
+>     \
+>      2
+>     /
+>    3
+>
+> ```
+>
+> return `[1,3,2]`.
+
+这是对二叉树进行中序遍历，下面是迭代版本的实现：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        std::stack<TreeNode*> toVisit;
+        while(1) {
+            while(root) { 
+                toVisit.push(root); 
+                root=root->left; 
+            }
+            if(toVisit.empty())
+                break;
+            root=toVisit.top(); 
+            toVisit.pop();
+            nodes.push_back(root->val);
+            root=root->right;
+        }
+        return nodes;
+    }
+};
+```
+
+迭代版本需要借助栈，首先往栈压入根结点，然后就是压入其所有的左子结点，之后如果根结点的左子结点都遍历完了，就会轮到右子结点。
+
+下面是递归版本的实现：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        inorder(root, nodes);
+        return nodes;
+    }
+    void inorder(TreeNode* root, vector<int>& nodes) {
+        if (!root) return;
+        inorder(root -> left, nodes);
+        nodes.push_back(root -> val);
+        inorder(root -> right, nodes);
+    }
+};
+```
+
+迭代版本实现会简单直观很多。
+
+第三种实现是不需要辅助空间，但是时间复杂度都是$O(n)$，方法称为`Morris traversal`。
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        TreeNode* curNode = root;
+        vector<int> nodes;
+        while (curNode) {
+            if (curNode -> left) {
+                TreeNode* predecessor = curNode -> left;
+                while (predecessor -> right && predecessor -> right != curNode)
+                    predecessor = predecessor -> right;
+                if (!(predecessor -> right)) {
+                    predecessor -> right = curNode;
+                    curNode = curNode -> left;
+                }
+                else {
+                    predecessor -> right = NULL;
+                    nodes.push_back(curNode -> val);
+                    curNode = curNode -> right;
+                }
+            }
+            else {
+                nodes.push_back(curNode -> val);
+                curNode = curNode -> right;
+            }
+        }
+        return nodes;
+    }
+};
+```
+
+这个方法借助了两个辅助指针。具体可以参考[Morris Traversal方法遍历二叉树（非递归，不用栈，O(1)空间）](http://www.cnblogs.com/AnnieKim/archive/2013/06/15/morristraversal.html)。
+
