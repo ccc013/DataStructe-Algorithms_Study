@@ -337,3 +337,133 @@ public:
 
 这是一个更简洁更快的解法。
 
+##### 7 [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) 
+
+题目描述如下：
+
+> Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+
+给定一个数组,判断数组中是否包含重复的数字,第一种解法如下:
+
+```c++
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        if(nums.size() <= 0)
+            return false;
+        int lens = nums.size();
+        sort(nums.begin(), nums.end());
+        for(int i=1; i<lens; i++){
+            if(nums[i] == nums[i-1])
+                return true;
+        }
+        return false;
+    }
+};
+```
+
+这个解法首先是对数组进行排序，然后再遍历数组，如果相邻两个数值相等，就说明是重复数字。
+
+第二种解法如下：
+
+```c++
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        if(nums.size() <= 0)
+            return false;
+        return set<int>(nums.begin(), nums.end()).size() < nums.size();
+    }
+};
+```
+
+这个解法就是利用了`set`数据结构中存储着都是数值不同的特性，如果其大小比原数组小，说明数组中存在重复的数字。
+
+##### 8 [Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii/)
+
+题目描述如下:
+
+> Given an array of integers and an integer *k*, find out whether there are two distinct indices *i* and *j* in the array such that **nums[i] = nums[j]** and the difference between *i* and *j* is at most *k*.
+
+这道题目是给出一个数组和一个数字`k`，在数组中搜索是否存在相同的两个数字的索引值差不大于`k`，如果有，返回`true`,否则返回`false`。解法如下：
+
+```c++
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        if (k <= 0) 
+            return false;
+        if (k >= nums.size()) 
+            k = nums.size() - 1;
+        set<int> cand;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > k) 
+                cand.erase(nums[i-k-1]);
+            if (!cand.insert(nums[i]).second) 
+                return true;
+        }
+        return false;
+    }
+};
+```
+
+上述方法采用了`set`以及滑动窗口的思想，其实就是判断在一个长度为`k`的窗口内是否存在相同的两个数字，当遍历索引值大于`k`值后，首先会删除窗口的第一个元素，即`nums[i-k-1]`，然后由于`set`只能存在单独不重复的数字，如果插入操作失败，说明已经存在一个相同的数字，此时就满足条件，可以返回`true`。
+
+另一种解法如下：
+
+```c++
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        if (k <= 0) 
+            return false;
+        if (k >= nums.size()) 
+            k = nums.size() - 1;
+        unordered_map<int, int> mp; 
+        for (int i = 0; i < nums.size(); i++) {
+            if (mp.find(nums[i]) != mp.end() && i - mp[nums[i]] <= k)
+                return true;
+            mp[nums[i]] = i; 
+        }
+        return false; 
+    }
+};
+```
+
+思路是一样的，不过这是采用`unordered_map`这种数据结构
+
+##### 9 [Contains Duplicate III](https://leetcode.com/problems/contains-duplicate-iii/)
+
+题目描述如下：
+
+> Given an array of integers, find out whether there are two distinct indices *i* and *j* in the array such that the difference between **nums[i]** and **nums[j]** is at most *t* and the difference between *i* and *j* is at most *k*.
+
+给定一个数组，以及一个`t`和`k`，要求寻找两个数字，这个数字的差值不大于`t`,且其索引值也不大于`k`。解法如下：
+
+```c++
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        if (k <= 0) 
+            return false;
+        if (k >= nums.size()) 
+            k = nums.size() - 1;
+        set<int> cand;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > k) 
+                // keep the set contains nums i j at most k
+                cand.erase(nums[i-k-1]);
+            // |x - nums[i]| <= t  ==> -t <= x - nums[i] <= t;
+            auto pos = cand.lower_bound(nums[i] - t); // x-nums[i] >= -t ==> x >= nums[i]-t 
+            // x - nums[i] <= t ==> |x - nums[i]| <= t    
+            if (pos != cand.end() && *pos - nums[i] <= t) 
+                return true;
+            cand.insert(nums[i]);
+        }
+        return false; 
+    }
+};
+```
+
+上述解法首先使用`set`，然后使用滑动窗口的思路，保证索引值的差值符合要求，然后利用`set`的`lower_bound()`函数返回第一个大于等于`nums[i]-t`的索引值，原因在上述代码注释中给出，因为要求$|nums[i]-nums[j]| \le t$，因此可以推导得到$num[i] - t \ge x$，然后继续判断这个索引值如果是在滑动窗口内，且符合要求，就可以返回`true`。
+
