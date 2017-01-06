@@ -142,3 +142,225 @@ public:
 
 这是使用了异或的思路。因为字符也是可以转换成整数来进行异或运算的。
 
+##### 4 [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
+
+题目描述如下：
+
+> Given a non-empty array of integers, return the **k** most frequent elements.
+>
+> For example,
+> Given `[1,1,1,2,2,3]` and k = 2, return `[1,2]`.
+>
+> **Note: **
+>
+> - You may assume *k* is always valid, 1 ≤ *k* ≤ number of unique elements.
+> - Your algorithm's time complexity **must be** better than O(*n* log *n*), where *n* is the array's size.
+
+给出一个非空数组，要求找到`k`个出现次数最多的元素。解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+       unordered_map<int, int> m;
+        for (int num : nums)
+            ++m[num];
+        
+        vector<vector<int>> buckets(nums.size() + 1); 
+        for (auto p : m)
+            buckets[p.second].push_back(p.first);
+        
+        vector<int> ans;
+        for (int i = buckets.size() - 1; i >= 0 && ans.size() < k; --i) {
+            for (int num : buckets[i]) {
+                ans.push_back(num);
+                if (ans.size() == k)
+                    break;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+上述解法首先是用`unordered_map`来存放数组元素，将数值作为key，而其出现次数作为value，然后新建一个`vector<vector<int> >`，即二维数组，将value作为外层的索引，而key作为内层，然后再利用一个`bucket sort`来返回要求的元素。
+
+第二种解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+       unordered_map<int,int> map;
+        for(int num : nums){
+            map[num]++;
+        }
+        
+        vector<int> res;
+        // pair<first, second>: first is frequency,  second is number
+        priority_queue<pair<int,int>> pq; 
+        for(auto it = map.begin(); it != map.end(); it++){
+            pq.push(make_pair(it->second, it->first));
+            if(pq.size() > (int)map.size() - k){
+                res.push_back(pq.top().second);
+                pq.pop();
+            }
+        }
+        return res;
+    }
+};
+```
+
+这种解法同样使用了`unordered_map`来存放数组元素及其出现次数，但是接着是使用`priority_queue<pair<int,int>>`结构来输出需要的元素。
+
+##### 5 [Sort Characters By Frequency](https://leetcode.com/problems/sort-characters-by-frequency/)
+
+题目描述如下：
+
+> Given a string, sort it in decreasing order based on the frequency of characters.
+>
+> **Example 1:**
+>
+> ```
+> Input:
+> "tree"
+>
+> Output:
+> "eert"
+>
+> Explanation:
+> 'e' appears twice while 'r' and 't' both appear once.
+> So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+>
+> ```
+>
+> **Example 2:**
+>
+> ```
+> Input:
+> "cccaaa"
+>
+> Output:
+> "cccaaa"
+>
+> Explanation:
+> Both 'c' and 'a' appear three times, so "aaaccc" is also a valid answer.
+> Note that "cacaca" is incorrect, as the same characters must be together.
+>
+> ```
+>
+> **Example 3:**
+>
+> ```
+> Input:
+> "Aabb"
+>
+> Output:
+> "bbAa"
+>
+> Explanation:
+> "bbaA" is also a valid answer, but "Aabb" is incorrect.
+> Note that 'A' and 'a' are treated as two different characters.
+>
+> ```
+
+给定一个字符串，重新排列顺序，先按照频数，然后频数相同的情况是进行降序排列。实现方法如下：
+
+```c++
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char,int> map;
+        for(char c : s){
+            map[c]++;
+        }
+        string res;
+        vector<string> bucket(s.size()+1, "");
+        //put character into frequency bucket
+        for(auto& it : map){
+            int n = it.second;
+            char c = it.first;
+            bucket[n].append(n,c);
+        }
+        //form descending sorted string
+        for(int i=s.size(); i>0; i--) {
+            if(!bucket[i].empty())
+                res.append(bucket[i]);
+        }
+        return res;
+    }
+};
+```
+
+上述解法同样是先用哈希表来统计每个字符串出现的次数，然后放到一个`vector`中，最后再进行输出。其中`bucket[n].append(n,c)`表示在第n个位置的字符串中添加`n`个字符`c`。
+
+##### 6 [Intersection of Two Arrays](https://leetcode.com/problems/intersection-of-two-arrays/)
+
+题目描述如下：
+
+> Given two arrays, write a function to compute their intersection.
+>
+> **Example:**
+> Given *nums1* = `[1, 2, 2, 1]`, *nums2* = `[2, 2]`, return `[2]`.
+>
+> **Note:**
+>
+> - Each element in the result must be unique.
+> - The result can be in any order.
+
+给定两个数组，返回两者的共同元素。解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.size() <=0 || nums2.size() <= 0)
+            return vector<int>();
+        vector<int> res;
+        map<int, int> m1,m2;
+        for(int n: nums1)
+            m1[n]++;
+        for(int n: nums2)
+            m2[n]++;
+        if(m1.size() > m2.size()){
+            for(auto& m: m1){
+                int num = m.first;
+                if(m2.find(num) != m2.end())
+                    res.push_back(num);
+            }
+        }else{
+            for(auto& m: m2){
+                int num = m.first;
+                if(m1.find(num) != m1.end())
+                    res.push_back(num);
+            }
+        }
+        return res;
+    }
+};
+```
+
+这应该是一个最容易想到的解决方法，使用两个哈希表分别存储两个数组的元素，然后再查找。
+
+一个更快的解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.size() <=0 || nums2.size() <= 0)
+            return vector<int>();
+        unordered_set<int> m(nums1.begin(), nums1.end());
+        vector<int> res;
+        for (auto a : nums2)
+            if (m.count(a)) {
+                res.push_back(a);
+                m.erase(a);
+            }
+        return res;
+    }
+};
+```
+
+使用`unordered_set`保存第一个数组的元素，然后遍历第二个数组，看是否有同时存在两个数组的数值，如果有，放入`res`中，并且删除`m`中的这个元素，保证不会重复添加同一个数值。
+
