@@ -364,3 +364,74 @@ public:
 
 使用`unordered_set`保存第一个数组的元素，然后遍历第二个数组，看是否有同时存在两个数组的数值，如果有，放入`res`中，并且删除`m`中的这个元素，保证不会重复添加同一个数值。
 
+##### 7 [Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii/)
+
+题目描述如下：
+
+> Given two arrays, write a function to compute their intersection.
+>
+> **Example:**
+> Given *nums1* = `[1, 2, 2, 1]`, *nums2* = `[2, 2]`, return `[2, 2]`.
+>
+> **Note:**
+>
+> - Each element in the result should appear as many times as it shows in both arrays.
+> - The result can be in any order.
+>
+> **Follow up:**
+>
+> - What if the given array is already sorted? How would you optimize your algorithm?
+> - What if *nums1*'s size is small compared to *nums2*'s size? Which algorithm is better?
+> - What if elements of *nums2* are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+
+给定两个数组，返回两个数组重复的数字，可以包含相同的数字。解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.size() <=0 || nums2.size() <= 0)
+            return vector<int>();
+        unordered_map<int,int> m;
+        for(int n: nums1)
+            m[n]++;
+        vector<int> res;
+        for (auto a : nums2)
+            if (m.find(a) != m.end() && m[a] > 0) {
+                res.push_back(a);
+                m[a]--;
+            }
+        return res;
+    }
+};
+```
+
+首先使用哈希表存放第一个数组的数值和对于频数，然后遍历第二个数组，当在哈希表中能找到第二个数组对于的元素的时候，需要哈希表上对应的数值的频数减一。
+
+第二种解法如下：
+
+```c++
+ sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+        int n1 = (int)nums1.size(), n2 = (int)nums2.size();
+        int i1 = 0, i2 = 0;
+        vector<int> res;
+        while(i1 < n1 && i2 < n2){
+            if(nums1[i1] == nums2[i2]) {
+                res.push_back(nums1[i1]);
+                i1++;
+                i2++;
+            }
+            else if(nums1[i1] > nums2[i2]){
+                i2++;
+            }
+            else{
+                i1++;
+            }
+        }
+        return res;
+```
+
+这是先对两个数组进行排序，然后再依次进行遍历两个数组，因为数组已经是排序的，所以如果第一个数组元素比第二个数组元素大，那么需要让第二个数组的指针增加，否则让第一个数组的指针相加。
+
+##### 8 
