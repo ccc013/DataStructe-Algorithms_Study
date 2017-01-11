@@ -103,4 +103,169 @@ sum + m * (n - 1) = x * n \\
 $$
 通过这些数学公式，可以编程实现。
 
-##### 3 
+##### 3 [Excel Sheet Column Number](https://leetcode.com/problems/excel-sheet-column-number/) 
+
+题目描述如下：
+
+> Given a column title as appear in an Excel sheet, return its corresponding column number.
+>
+> For example:
+>
+> ```
+>     A -> 1
+>     B -> 2
+>     C -> 3
+>     ...
+>     Z -> 26
+>     AA -> 27
+>     AB -> 28 
+> ```
+
+这是一个跟EXCEL有关的题目，字母A到Z分别依次表示1到26，然后AA表示27，AB表示28。解法如下：
+
+```c++
+class Solution {
+public:
+    int titleToNumber(string s) {
+        if(s.size() <= 0)
+            return 0;
+        int n = s.size();
+        int num = 0;
+        for(int i=0; i<n; i++){
+            int tmp = s[i] - 65 + 1;
+            num += pow(26, n-i-1) * tmp;
+        }
+        return num;
+    }
+};
+```
+
+这是一个相当于二十六进制的问题，先取得当前字符对应表示的数字，这可以通过减去65再加1，这是根据对应的ASCII表，然后根据其所在位置判断其对应要乘的26的阶数。
+
+一个更简洁以及快速的解法如下：
+
+```c++
+class Solution {
+public:
+    int titleToNumber(string s) {
+        int result = 0;
+        for (int i = 0; i < s.size(); result = result * 26 + (s.at(i) - 'A' + 1), i++);
+        return result;
+    }
+};
+```
+
+由于对字符串取值是从其高位开始，所以每次相加的时候让之前累加的结果乘以一个26，再加上当前位置的字母表示的数字即可。
+
+##### 4 [Excel Sheet Column Title](https://leetcode.com/problems/excel-sheet-column-title/)
+
+题目描述如下：
+
+> Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+>
+> For example:
+>
+> ```
+>     1 -> A
+>     2 -> B
+>     3 -> C
+>     ...
+>     26 -> Z
+>     27 -> AA
+>     28 -> AB 
+> ```
+
+跟上一题相反，这是给出数字转换成字符串，解法如下：
+
+```c++
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string res = "";
+        char tmp;
+        while(n > 0){
+            n -= 1;
+            tmp = 'A' + n % 26;
+            res = tmp + res;
+            n /= 26;
+        }
+        return res;
+    }
+};
+```
+
+这里需要注意的是`n -= 1;`这一步，如果不执行这一步，在后面无论是整除和求余操作，在遇到26的倍数的数字的时候会出现错误。
+
+##### 5 [Add Binary](https://leetcode.com/problems/add-binary/)
+
+题目描述如下：
+
+> Given two binary strings, return their sum (also a binary string).
+>
+> For example,
+> a = `"11"`
+> b = `"1"`
+> Return `"100"`.
+
+给定两个二进制表示的字符串，返回其求和的字符串形式。解法如下：
+
+```c++
+class Solution {
+public:
+    string addBinary(string a, string b) {
+         string result = "";
+        int apos = a.size() - 1;
+        int bpos = b.size() - 1;
+        int adigit, bdigit, carry = 0;
+        
+        while (apos >= 0 || bpos >= 0 || carry == 1)
+        {
+            adigit = bdigit = 0;
+            
+            if (apos >= 0) adigit = a[apos--] == '1';
+            if (bpos >= 0) bdigit = b[bpos--] == '1';
+            
+            // Another way: the digit is 1 if adigit + bdigit + carry == 1 or == 3, but I noticed that
+            // XOR is more concise:
+            result = static_cast<char>(adigit ^ bdigit ^ carry + '0') + result; 
+            carry = adigit + bdigit + carry >= 2;
+        }
+        
+        return result;
+    }
+};
+```
+
+在循环中要注意`carry == 1`的条件，这是表示有进位的情况，循环先从每个字符串尾部开始，也就是二进制的最低位开始进行相加，通过判断每一位是否为字符`1`，来得到`adigit`和`bdigit`，然后相加的时候使用异或操作，即`adigit ^ bdigit ^ carry`，同时要用`static_cast`来转换成字符`char`类型，然后要计算是否有进位，即`carry`的数值。
+
+##### 6 [Plus One](https://leetcode.com/problems/plus-one/)
+
+题目描述如下：
+
+> Given a non-negative integer represented as a **non-empty** array of digits, plus one to the integer.
+>
+> You may assume the integer do not contain any leading zero, except the number 0 itself.
+>
+> The digits are stored such that the most significant digit is at the head of the list.
+
+给定一个数组，每个元素表示一个整数的一个位数，现在是将每一位都加一。解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        bool carry = true;
+        for(int i = digits.size() - 1; i >=0 && carry; i--){
+            carry = (++digits[i]%=10) == 0;
+        }
+        if(carry){
+            digits.insert(digits.begin(), 1);
+        }
+        return digits;
+    }
+};
+```
+
+上述解法，每次对一位加1后都需要对10进行求余，如果最终`carry`是`true`，那么需要在最前位加1。
+
+#####  7 
