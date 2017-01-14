@@ -268,4 +268,95 @@ public:
 
 上述解法，每次对一位加1后都需要对10进行求余，如果最终`carry`是`true`，那么需要在最前位加1。
 
-#####  7 
+#####  7 [Power of Three](https://leetcode.com/problems/power-of-three/) 
+
+题目描述如下：
+
+> Given an integer, write a function to determine if it is a power of three.
+>
+> **Follow up:**
+> Could you do it without using any loop / recursion?
+
+给出一个整数，判断其是否3的幂数。解法如下：
+
+```c++
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if(n < 0)
+            return false;
+        if (n<=0) 
+            return false;
+        int t = pow(3,(int)(log(INT_MAX)/log(3)));
+        return (t%n == 0);
+    }
+};
+```
+
+这是先找出3的幂数中最大的一个数，然后将其对给定的整数`n`进行求余操作，如果结果为0，表示`n`是3的一个幂数，否则不是。
+
+##### 8 [Power of Two](https://leetcode.com/problems/power-of-two/)
+
+题目描述如下：
+
+> Given an integer, write a function to determine if it is a power of two.
+
+跟上题类似，这是判断2的幂数，可以使用相同的解法：
+
+```c++
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n < 0)
+            return false;
+        if (n<=0) 
+            return false;
+        int t = pow(2,(int)(log(INT_MAX)/log(2)));
+        return (t%n == 0);
+    }
+};
+```
+
+这是先找出2的幂数中最大的一个数，然后将其对给定的整数`n`进行求余操作，如果结果为0，表示`n`是3的一个幂数，否则不是。
+
+另一个解法如下：
+
+```c++
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+         return n > 0 && !(n&(n-1));
+    }
+};
+```
+
+这是由于2的幂数的二进制形式都是最左边一位是1，然后后面的低位都是0，如对于4，二进制是`0100`,那么它跟3进行与操作得到的就是0了。
+
+##### 9 [Missing Number](https://leetcode.com/problems/missing-number/)
+
+题目描述如下：
+
+> Given an array containing *n* distinct numbers taken from `0, 1, 2, ..., n`, find the one that is missing from the array.
+>
+> For example,
+> Given *nums* = `[0, 1, 3]` return `2`.
+>
+> **Note**:
+> Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+这是寻找缺乏的数字。解法如下：
+
+```c++
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int missing =0;
+        for(int i=0; i<nums.size();++i) 
+            missing ^= ((i+1)^nums[i]);
+        return missing;
+    }
+};
+```
+
+上述解法的思路是使用异或的做法，并且每次异或操作手动增加一个数字`i+1`，然后数组中缺少的数字则只会在异或操作中出现一次，而其他数字是出现两次，因此最终结果就是缺少的数字。
+
