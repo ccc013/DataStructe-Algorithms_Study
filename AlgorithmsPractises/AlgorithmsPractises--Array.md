@@ -467,3 +467,53 @@ public:
 
 上述解法首先使用`set`，然后使用滑动窗口的思路，保证索引值的差值符合要求，然后利用`set`的`lower_bound()`函数返回第一个大于等于`nums[i]-t`的索引值，原因在上述代码注释中给出，因为要求$|nums[i]-nums[j]| \le t$，因此可以推导得到$num[i] - t \ge x$，然后继续判断这个索引值如果是在滑动窗口内，且符合要求，就可以返回`true`。
 
+##### 10 [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+
+题目描述如下：
+
+> Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+>
+> (i.e., `0 1 2 4 5 6 7` might become `4 5 6 7 0 1 2`).
+>
+> Find the minimum element.
+>
+> You may assume no duplicate exists in the array.
+
+题目是给出一个排序数组进行任意平移后的数组，求其最小值。解法如下：
+
+```c++
+class Solution {
+public:
+    int findMin(vector<int>& nums) {   
+        sort(nums.begin(), nums.end());
+        return nums[0];
+    }
+};
+```
+
+这个解法利用了算法`sort()`，所以耗时会比较长。
+
+更快的解法如下：
+
+```c++
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+       int left = 0,  right = nums.size() - 1;
+        while(left < right) {
+            if(nums[left] < nums[right]) 
+                return nums[left];
+                
+            int mid = (left + right)/2;
+            if(nums[mid] > nums[right])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return nums[left];
+    }
+};
+```
+
+这里分三种情况，假如首元素就小于尾元素，这种情况就如`[1,2,3,4]`，是原始排序数组，直接返回首元素；第二种情况是中间值大于尾元素，即如`[4,5,6,7,0,1,2]`，中间值是7，大于尾元素2，所以应该让中间值的下一个元素作为下次循环的开始元素；第三种情况，就是中间值小于尾元素，那么就让中间值作为下次循环中的右值`right`。
+

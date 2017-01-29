@@ -1195,3 +1195,97 @@ public:
 
 这个方法借助了两个辅助指针。具体可以参考[Morris Traversal方法遍历二叉树（非递归，不用栈，O(1)空间）](http://www.cnblogs.com/AnnieKim/archive/2013/06/15/morristraversal.html)。
 
+##### 17 [Binary Tree Postorder Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal/)
+
+题目如下：
+
+> Given a binary tree, return the *postorder* traversal of its nodes' values.
+>
+> For example:
+> Given binary tree `{1,#,2,3}`,
+>
+> ```
+>    1
+>     \
+>      2
+>     /
+>    3
+>
+> ```
+>
+> return `[3,2,1]`.
+
+这是对二叉树进行后序遍历。递归版本如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        if(root == NULL)
+            return vector<int>();
+        vector<int> r;
+        postorder(root, r);
+        return r;
+    }
+    
+    void postorder(TreeNode* root, vector<int>& r){
+        if(!root)
+            return;
+        postorder(root->left, r);
+        postorder(root->right,r);
+        r.push_back(root->val);
+    }
+};
+```
+
+迭代版本如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        stack<TreeNode*> toVisit;
+        TreeNode* curNode = root;
+        TreeNode* lastNode = NULL;
+        while (curNode || !toVisit.empty()) {
+            if (curNode) {
+                toVisit.push(curNode);
+                curNode = curNode -> left;
+            }
+            else {
+                TreeNode* topNode = toVisit.top();
+                if (topNode -> right && lastNode != topNode -> right)
+                    curNode = topNode -> right;
+                else {
+                    nodes.push_back(topNode -> val);
+                    lastNode = topNode;
+                    toVisit.pop();
+                }
+            }
+        }
+        return nodes;
+    }  
+};
+```
+
+同样需要使用辅助栈`toVisit`,首先是从根结点开始一直遍历每棵树的左子树，当遇到空结点后，就弹出栈的栈顶结点，然后判断，如果没有右子树，那么就说明是一个最左结点了，可以放到输出的`vector`中，同时记录当前结点；如果上一个结点是当前结点的右子树，那就是该结点是一个子树的根结点，并且轮到要输出该结点的数值了。而如果这两个条件都满足，即有右子树和上一个遍历结点不是当前结点的右子树，则将遍历结点变成当前结点的右子树，进行下一次的遍历了。
+
