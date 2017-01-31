@@ -360,3 +360,79 @@ public:
 
 上述解法的思路是使用异或的做法，并且每次异或操作手动增加一个数字`i+1`，然后数组中缺少的数字则只会在异或操作中出现一次，而其他数字是出现两次，因此最终结果就是缺少的数字。
 
+##### 10 [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)
+
+题目描述如下：
+
+> Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the [Hamming weight](http://en.wikipedia.org/wiki/Hamming_weight)).
+>
+> For example, the 32-bit integer ’11' has binary representation `00000000000000000000000000001011`, so the function should return 3.
+
+寻找给定一个无符号整数的二进制表示中1的个数。解法如下：
+
+```c++
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int count = 0;
+        while(n){
+            ++count;
+            n = n & (n-1);
+        }
+        return count;
+    }
+};
+```
+
+这是通过每次循环让`n`与`n-1`进行与操作，这样会让最左端的位数为1变为0，而且有多少个1就循环多少次。效率大大提高。
+
+##### 11 [Counting Bits](https://leetcode.com/problems/counting-bits/)
+
+题目描述如下：
+
+> Given a non negative integer number **num**. For every numbers **i** in the range **0 ≤ i ≤ num** calculate the number of 1's in their binary representation and return them as an array.
+>
+> **Example:**
+> For `num = 5` you should return `[0,1,1,2,1,2]`.
+
+这道题目是给定一个数字`n`,求在`0-n`范围内的整数，其二进制表示分别有多少个1.解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> r;
+        int i=0;
+        while(i <= num){
+            int count = 0;
+            int it = i;
+            while(it){
+                ++count;
+                it = it & (it-1);
+            }
+            r.push_back(count);
+            i++;
+        }
+        return r;
+    }
+};
+```
+
+上述解法主要是使用了求取单个数字二进制表示有多少个1的思路，其时间复杂度是$O(n*sizeof(integer))$。
+
+一个更快的解法如下：
+
+```c++
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> ret(num+1, 0);
+        for (int i = 1; i <= num; ++i)
+            ret[i] = ret[i&(i-1)] + 1;
+        return ret;
+    }
+};
+```
+
+这个方法是$O(n)$的时间复杂度。它是利用前面已经计算好的结果来得到后面的结果。代码中`ret[i&(i-1)]`这里就体现了这个思路，比如当前计算的是14，它是`1110`的二进制表示，实际上可以看做12，即`1100`再增加一个1，所以将其跟13进行与操作，得到的就是12，然后再进行加1，就得到14的1的个数了。
+
