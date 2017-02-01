@@ -436,3 +436,48 @@ public:
 
 这个方法是$O(n)$的时间复杂度。它是利用前面已经计算好的结果来得到后面的结果。代码中`ret[i&(i-1)]`这里就体现了这个思路，比如当前计算的是14，它是`1110`的二进制表示，实际上可以看做12，即`1100`再增加一个1，所以将其跟13进行与操作，得到的就是12，然后再进行加1，就得到14的1的个数了。
 
+##### 12 [Hamming Distance](https://leetcode.com/problems/hamming-distance/)
+
+题目描述如下：
+
+> The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) between two integers is the number of positions at which the corresponding bits are different.
+>
+> Given two integers `x` and `y`, calculate the Hamming distance.
+>
+> **Note:**
+> 0 ≤ `x`, `y` < 231.
+>
+> **Example:**
+>
+> ```
+> Input: x = 1, y = 4
+>
+> Output: 2
+>
+> Explanation:
+> 1   (0 0 0 1)
+> 4   (0 1 0 0)
+>        ↑   ↑
+>
+> The above arrows point to positions where the corresponding bits are different.
+> ```
+
+题目要求计算给定两个数的`Hamming Distance`，这个海明距离是指两个整数对应二进制表示中位数不同的个数，如题目给定例子的1和4一样。解法如下：
+
+```c++
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        int n = x ^ y;
+        int dis = 0;
+        while(n){
+            ++dis;
+            n = n & (n - 1);
+        }
+        return dis;
+    }
+};
+```
+
+上述解法首先是采用异或，得到两个数中二进制表示不同的位数，然后分别计算1的个数，也就是要求计算的海明距离了。
+

@@ -396,3 +396,52 @@ public:
 };
 ```
 
+上述解法需要依次判断两个给点的链表是否为空，如果是有空的，则让`tmp`的`next`指针指向非空的链表，否则就依次判断当前两个链表的元素的大小，按照递增的顺序来进行合并。
+
+#### 8  [Insertion Sort List](https://leetcode.com/problems/insertion-sort-list/)
+
+题目描述如下：
+
+> Sort a linked list using insertion sort.
+
+这是使用插入排序来对一个链表进行排序。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* new_head = new ListNode(0);
+        new_head -> next = head;
+        ListNode* pre = new_head;
+        ListNode* cur = head;
+        while (cur) {
+            if (cur -> next && cur -> next -> val < cur -> val) {
+                while (pre -> next && pre -> next -> val < cur -> next -> val)
+                    pre = pre -> next;
+                /* Insert cur -> next after pre.*/
+                ListNode* temp = pre -> next;
+                pre -> next = cur -> next;
+                cur -> next = cur -> next -> next;
+                pre -> next -> next = temp;
+                /* Move pre back to new_head. */
+                pre = new_head;
+            }
+            else cur = cur -> next;
+        }
+        ListNode* res = new_head -> next;
+        delete new_head;
+        return res;
+    }
+};
+```
+
+上述解法首先定义一个`new_head`，它是预防有些元素可能会比`head`还要小的情况。插入排序是从链表的第二个元素开始，每次循环的时候，如果当前值都小于前一个结点的数值，就会从`head`开始往后查找比当前元素要大的元素，找到的时候，即代码中`pre->next->val < cur->next->val`条件不成立，此时就将`cur->next`插入到`pre`后面，并让`pre`重新定位到链表的头结点`new_head`。最后返回链表的时候再删除这个头结点即可。
+
