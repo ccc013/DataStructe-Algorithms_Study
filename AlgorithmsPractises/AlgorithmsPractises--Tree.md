@@ -418,7 +418,7 @@ public:
 };
 ```
 
-主要是增加了在最后返回`result`前的6行代码，对`result`进行一个反转排序来满足题目的输出要求。
+主要是增加了在最后返回`result`前的代码，对`result`进行一个反转排序来满足题目的输出要求。
 
 去讨论区看到别人的实现方法，第一种如下：
 
@@ -822,13 +822,14 @@ public:
         stack<string> pathStack;
         s.push(root);
         pathStack.push(to_string(root->val));
-        
         while (!s.empty()) {
-            TreeNode * curNode = s.top(); s.pop();
-            string tmpPath = pathStack.top(); pathStack.pop();
-            
+            TreeNode * curNode = s.top(); 
+            s.pop();
+            string tmpPath = pathStack.top(); 
+            pathStack.pop();
             if (curNode->left == NULL && curNode->right == NULL) {
-                res.push_back(tmpPath); continue;
+                res.push_back(tmpPath); 
+                continue;
             }
             
             if (curNode->left != NULL) {
@@ -840,8 +841,7 @@ public:
                 s.push(curNode->right);
                 pathStack.push(tmpPath + "->" + to_string(curNode->right->val));
             }
-        }
-        
+        } 
         return res;
     }
 };
@@ -1288,4 +1288,94 @@ public:
 ```
 
 同样需要使用辅助栈`toVisit`,首先是从根结点开始一直遍历每棵树的左子树，当遇到空结点后，就弹出栈的栈顶结点，然后判断，如果没有右子树，那么就说明是一个最左结点了，可以放到输出的`vector`中，同时记录当前结点；如果上一个结点是当前结点的右子树，那就是该结点是一个子树的根结点，并且轮到要输出该结点的数值了。而如果这两个条件都满足，即有右子树和上一个遍历结点不是当前结点的右子树，则将遍历结点变成当前结点的右子树，进行下一次的遍历了。
+
+##### 18 [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/)
+
+题目描述如下：
+
+> Given a binary tree, imagine yourself standing on the *right* side of it, return the values of the nodes you can see ordered from top to bottom.
+>
+> For example:
+> Given the following binary tree,
+>
+> ```
+>    1            <---
+>  /   \
+> 2     3         <---
+>  \     \
+>   5     4       <---
+>
+> ```
+>
+> You should return `[1, 3, 4]`.
+
+这是给定一个二叉树，求每层最右结点。解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        if(root == NULL)
+            return vector<int>();
+        vector<int> rs;
+        queue<TreeNode*> qt;
+        qt.push(root);
+        while(!qt.empty()){
+            rs.push_back(qt.back()->val);
+            for(int i=qt.size(); i > 0; i--){
+                TreeNode* t = qt.front();
+                qt.pop();
+                if(t->left)
+                    qt.push(t->left);
+                if(t->right)
+                    qt.push(t->right);
+            }
+        }
+        return rs;
+    }
+};
+```
+
+上述解法是一个迭代版本，利用了`queue`结构来保存每一层的结点，然后遍历完一层结点后，每次都取队列最后一个元素，也就是每层的最右结点。
+
+下面是另一个解法：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void recursion(TreeNode *root, int level, vector<int> &res)
+    {
+        if(root==NULL) return ;
+        if(res.size()<level) res.push_back(root->val);
+        recursion(root->right, level+1, res);
+        recursion(root->left, level+1, res);
+    }
+    
+    vector<int> rightSideView(TreeNode *root) {
+        vector<int> res;
+        recursion(root, 1, res);
+        return res;
+    }
+};
+```
+
+这是递归版本，使用一个改进的先序遍历方法，即从根结点开始，然后是右子树，再是左子树，判断是否是要求的最右结点的代码是`res.size() < level`，这里`level`代表所处的层数，因为是先遍历右子树，如果右子树非空，并且`res`中保存的元素数量少于当前层数，说明当前遍历的元素就是要求的数值。
 

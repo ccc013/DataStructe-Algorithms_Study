@@ -517,3 +517,32 @@ public:
 
 这里分三种情况，假如首元素就小于尾元素，这种情况就如`[1,2,3,4]`，是原始排序数组，直接返回首元素；第二种情况是中间值大于尾元素，即如`[4,5,6,7,0,1,2]`，中间值是7，大于尾元素2，所以应该让中间值的下一个元素作为下次循环的开始元素；第三种情况，就是中间值小于尾元素，那么就让中间值作为下次循环中的右值`right`。
 
+##### 11 [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
+
+题目描述如下：
+
+> Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+>
+> For example, given the array `[-2,1,-3,4,-1,2,1,-5,4]`,
+> the contiguous subarray `[4,-1,2,1]` has the largest sum = `6`.
+
+题目是求给定数组的连续子数组中相加和最大的数值。解法如下：
+
+```c++
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = nums[0];
+        int sum = 0;
+        for(int i=0; i < nums.size(); i++){
+            sum += nums[i];
+            res = max(sum, res);
+            sum = max(sum, 0);
+        }
+        return res;
+    }
+};
+```
+
+上述解法是每次循环的时候需要将当前和跟之前保存的最大值比较，确定最大值，然后要让当前和`sum`跟0比较，如果是负数，则重新设定为0，重新开始求和。
+

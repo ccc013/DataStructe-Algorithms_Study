@@ -452,3 +452,39 @@ public:
 
 这个解法是利用到了KMP的思路。参考自这篇[文章](https://discuss.leetcode.com/topic/14526/c-8-ms-kmp-based-o-n-time-o-n-memory-solution)。
 
+##### 11 [Is Subsequence](https://leetcode.com/problems/is-subsequence/)
+
+题目描述如下：
+
+> Given a string **s** and a string **t**, check if **s** is subsequence of **t**.
+>
+> You may assume that there is only lower case English letters in both **s** and **t**. **t** is potentially a very long (length ~= 500,000) string, and **s** is a short string (<=100).
+>
+> A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, `"ace"` is a subsequence of `"abcde"` while `"aec"` is not).
+>
+> **Example 1:**
+> **s** = `"abc"`, **t** = `"ahbgdc"`
+>
+> Return `true`.
+>
+> **Example 2:**
+> **s** = `"axc"`, **t** = `"ahbgdc"`
+>
+> Return `false`.
+
+给定两个字符串`s,t`，判断`s`是否是`t`的子串，子串要求在原来主串中的排列顺序也是一样的。解法如下：
+
+```c++
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int sLen = s.length(), sIdx = 0, tLen = t.length();
+        for (int i=0; i<tLen && sIdx<sLen; i++) 
+            if (t[i]==s[sIdx]) sIdx++;
+        return sIdx==sLen;
+    }
+};
+```
+
+上述解法是循环主串`t`，并且记录字符串`s`得到的索引值`sIdx`，如果是符合要求的子串，那么最终`sIdx`会等于子串的长度，否则就不是。
+
