@@ -546,3 +546,67 @@ public:
 
 上述解法是每次循环的时候需要将当前和跟之前保存的最大值比较，确定最大值，然后要让当前和`sum`跟0比较，如果是负数，则重新设定为0，重新开始求和。
 
+##### 12 [Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
+
+题目描述如下：
+
+> Given an array *nums* containing *n* + 1 integers where each integer is between 1 and *n* (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+>
+> **Note:**
+>
+> 1. You **must not** modify the array (assume the array is read only).
+> 2. You must use only constant, *O*(1) extra space.
+> 3. Your runtime complexity should be less than `O(n2)`.
+> 4. There is only one duplicate number in the array, but it could be repeated more than once.
+
+解法如下：
+
+```c++
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        if (nums.size() > 1)
+    	{
+    		int slow = nums[0];
+    		int fast = nums[nums[0]];
+    		while (slow != fast)
+    		{
+    			slow = nums[slow];
+    			fast = nums[nums[fast]];
+    		}
+    
+    		fast = 0;
+    		while (fast != slow)
+    		{
+    			fast = nums[fast];
+    			slow = nums[slow];
+    		}
+    		return slow;
+    	}
+    	return -1;
+    }
+};
+```
+
+上述解法主要参考自[这篇文章](https://discuss.leetcode.com/topic/25913/my-easy-understood-solution-with-o-n-time-and-o-1-space-without-modifying-the-array-with-clear-explanation),它是借鉴了解决环形链表的思路，采用两个指针，第一个循环是为了找到环形链路的入口。还有一种解法如下：
+
+```c++
+int findDuplicate(vector<int>& nums) {
+    int n=nums.size()-1;
+    int low=1;
+    int high=n;
+    int mid;
+    while(low<high){
+        mid=(low+high)/2;
+        int count=0;
+        for(int num:nums){
+            if(num<=mid) count++;
+        }
+        if(count>mid) high=mid;
+        else low=mid+1; 
+    }
+    return low;
+}
+```
+
+这个解法也是使用了两个指针，利用了二分查找的思路。

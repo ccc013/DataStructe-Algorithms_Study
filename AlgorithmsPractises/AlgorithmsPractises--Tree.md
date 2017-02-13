@@ -1379,3 +1379,93 @@ public:
 
 这是递归版本，使用一个改进的先序遍历方法，即从根结点开始，然后是右子树，再是左子树，判断是否是要求的最右结点的代码是`res.size() < level`，这里`level`代表所处的层数，因为是先遍历右子树，如果右子树非空，并且`res`中保存的元素数量少于当前层数，说明当前遍历的元素就是要求的数值。
 
+##### 19 [Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/)
+
+题目描述如下：
+
+> Given a binary tree, return the *preorder* traversal of its nodes' values.
+>
+> For example:
+> Given binary tree `{1,#,2,3}`,
+>
+> ```
+>    1
+>     \
+>      2
+>     /
+>    3
+>
+> ```
+>
+> return `[1,2,3]`.
+
+这是对二叉树进行先序遍历。递归版本的解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(root == NULL)
+            return vector<int>();
+        vector<int> r;
+        preorder(root, r);
+        return r;
+    }
+    
+    void preorder(TreeNode* root, vector<int>& r){
+        if(!root)
+            return;
+        r.push_back(root->val);
+        preorder(root->left, r);
+        preorder(root->right,r);
+    }
+};
+```
+
+迭代版本的解法如下：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(root == NULL)
+            return vector<int>();
+        vector<int> nodes;
+        stack<TreeNode*> toVisit;
+        TreeNode* curNode = root;
+        while(curNode || !toVisit.empty()) {
+            if(curNode){
+                nodes.push_back(curNode->val);
+                toVisit.push(curNode);
+                curNode = curNode->left;
+            }else{
+                TreeNode* tmp = toVisit.top();
+                toVisit.pop();
+                curNode = tmp->right;
+            }
+        }
+        return nodes;
+    }    
+};
+```
+
+迭代版本同样需要使用`stack`进行辅助，每次判断的时候先将当前结点数组进行保存，然后每次都先遍历左子树，而如果当前结点是空结点，则栈弹出当前栈顶结点，并遍历右子树，即`curNode=tmp->right`。
+
