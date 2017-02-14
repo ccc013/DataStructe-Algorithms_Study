@@ -445,3 +445,57 @@ public:
 
 上述解法首先定义一个`new_head`，它是预防有些元素可能会比`head`还要小的情况。插入排序是从链表的第二个元素开始，每次循环的时候，如果当前值都小于前一个结点的数值，就会从`head`开始往后查找比当前元素要大的元素，找到的时候，即代码中`pre->next->val < cur->next->val`条件不成立，此时就将`cur->next`插入到`pre`后面，并让`pre`重新定位到链表的头结点`new_head`。最后返回链表的时候再删除这个头结点即可。
 
+#### 9 [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)
+
+题目描述如下：
+
+> Given a singly linked list, determine if it is a palindrome.
+
+给定一个单链表，判断其是否是回文。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head == NULL || head->next == NULL)
+            return true;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast->next != NULL && fast->next->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        slow->next = reverseList(slow->next);
+        slow = slow->next;
+        while(slow != NULL){
+            if(slow->val != head->val)
+                return false;
+            slow = slow->next;
+            head = head->next;
+        }
+        return true;
+    }
+    ListNode* reverseList(ListNode* head){
+        ListNode* next = NULL;
+        ListNode* pre = NULL;
+        while(head != NULL){
+            next = head->next;
+            head->next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+};
+```
+
+这个解法首先是使用快慢指针，当快指针到达链表末尾，慢指针会刚好到达链表中部，此时反转链表后半部分，也就是`slow->next = reverse(slow->next);`所做的工作，然后此时将得到一个从原链表尾部元素为开头，慢慢指向原链表中部元素的指针，也就是用`slow`表示，此时后面一个`while`循环就是进行比较，原链表从头开始和其尾部开始的元素进行比较。
+

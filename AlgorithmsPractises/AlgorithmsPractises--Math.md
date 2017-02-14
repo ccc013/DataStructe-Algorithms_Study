@@ -481,3 +481,29 @@ public:
 
 上述解法首先是采用异或，得到两个数中二进制表示不同的位数，然后分别计算1的个数，也就是要求计算的海明距离了。
 
+##### 13 [Palindrome Number](https://leetcode.com/problems/palindrome-number/)
+
+题目描述如下:
+
+> Determine whether an integer is a palindrome. Do this without extra space.
+
+这是判断给定一个整数是否是一个回文，并且要求不使用辅助空间。解法如下：
+
+```c++
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0 || (x !=0 && x % 10 == 0))
+            return false;
+        int sum = 0;
+        while(x > sum){
+            sum = sum*10 + x%10;
+            x /= 10;
+        }
+        return (x==sum)|| (x == sum/10);
+    }
+};
+```
+
+上述解法是利用了反转整数的思路，即代码`sum = sum*10 + x%10`这句话得到的就是`x`反转后的整数，而第一句是排除负数以及尾数是0的整数，而结果中`x == sum/10`这段代码是针对个位数的正整数，即0-9，它们也属于回文。
+
