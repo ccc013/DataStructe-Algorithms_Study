@@ -42,7 +42,7 @@ int main()
 	int data[11] = { 173, 122, 193, 43, 155, 14, 28, 65, 39, 81,23 };
 	radixSort(data,11,3);
 	for (int i = 0; i < 10; i++)
-		cout << data[i] << " ";
+		cout << a[i] << " ";
 	cout << endl;
 
 	system("pause");

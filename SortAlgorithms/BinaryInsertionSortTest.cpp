@@ -36,7 +36,7 @@ int main()
 
 	BinInsertSort(a, n);
 	for (int i = 0; i < 10; i++)
-		cout << data[i] << " ";
+		cout << a[i] << " ";
 	cout << endl;
 
 	system("pause");

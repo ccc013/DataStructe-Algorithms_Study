@@ -26,7 +26,7 @@ void InsertSort(SqList *L){
 		if (L->r[i] < L->r[i - 1]){
 			// 将L->r[i]插入有序表中,使用val保存待插入的数组元素L->r[i]
 			val = L->r[i];
-			for (j = i - 1; L->r[j]>val; j--)
+			for (j = i - 1; j >= 0 && L->r[j]>val; j--)
 				// 记录后移
 				L->r[j + 1] = L->r[j];	
 			// 插入到正确位置

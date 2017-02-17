@@ -44,7 +44,7 @@ int main()
 	int a[] = { 1, 5, 4, 2, 3, 3,6,4 };
 	BucketSort(a, n);
 	for (int i = 0; i < 10; i++)
-		cout << data[i] << " ";
+		cout << a[i] << " ";
 	cout << endl;
 
 	system("pause");
