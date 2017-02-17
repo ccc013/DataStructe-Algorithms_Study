@@ -101,6 +101,27 @@ void QuickSort(SqList *L){
 	QSort(L, 0, L->length - 1);
 }
 
+// 另一种快速排序
+void quickSort(int a[], int l, int h){
+	if (l < h){
+		int i = l, j = h, key = a[l];
+		while (i < j){
+			while (i < j && a[j] >= key)
+				j--;
+			if (i < j)
+				a[i++] = a[j];
+			while (i < j && a[i] <= key)
+				i++;
+			if (i < j)
+				a[j--] = a[i];
+		}
+		a[i] = key;
+		quickSort(a, l, i - 1);
+		quickSort(a, i + 1, h);
+	}
+}
+
+
 int main(void){
 	SqList l;
 	int a[] = { 9, 1, 5, 8, 3, 7, 4, 6, 2 };
