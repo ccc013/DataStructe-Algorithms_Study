@@ -172,7 +172,6 @@ using std::cout;
 using std::endl;
 using std::string;
 
-
 void move(string &str){
 	int length = str.size();
 	char ch;

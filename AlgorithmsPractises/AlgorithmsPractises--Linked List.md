@@ -499,3 +499,187 @@ public:
 
 这个解法首先是使用快慢指针，当快指针到达链表末尾，慢指针会刚好到达链表中部，此时反转链表后半部分，也就是`slow->next = reverse(slow->next);`所做的工作，然后此时将得到一个从原链表尾部元素为开头，慢慢指向原链表中部元素的指针，也就是用`slow`表示，此时后面一个`while`循环就是进行比较，原链表从头开始和其尾部开始的元素进行比较。
 
+#### 10 [Sort List](https://leetcode.com/problems/sort-list/)
+
+题目描述如下：
+
+> Sort a linked list in *O*(*n* log *n*) time using constant space complexity.
+
+对链表进行排序，要求时间复杂度是$O(nlogn)$。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        if(head == NULL || head->next == NULL)
+            return head;
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // divide the list to two parts
+        fast = slow->next;
+        slow->next = NULL;
+        
+        return merge(sortList(head), sortList(fast));
+    }
+    
+    ListNode* merge(ListNode* l1, ListNode* l2){
+        ListNode* head = new ListNode(0);
+        ListNode* tmp = head;
+        while(l1 != NULL && l2 != NULL){
+            if(l1->val <= l2->val){
+                tmp->next = l1;
+                l1 = l1->next;
+            }else{
+                tmp->next = l2;
+                l2 = l2->next;
+            }
+            tmp = tmp->next;
+        }
+        if(l1 != NULL)
+            tmp->next = l1;
+        else
+            tmp->next = l2;
+        return head->next;
+    }
+};
+```
+
+上述解法是使用了归并排序算法，首先使用快慢指针来将链表分成两部分，然后在融合部分就相当于融合两个有序的链表一样。
+
+使用快速排序的解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void sortListHelper(ListNode* head, ListNode* tail) {
+    	if (head -> next == tail) return;
+    	/* Partition the list. */
+    	ListNode* pre = head;
+    	ListNode* cur = head -> next; 
+    	ListNode* pivot = cur;
+    	while (cur -> next && cur -> next != tail) {		
+    		if (pivot -> val > cur -> next -> val) {
+    			ListNode* temp = pre -> next;
+    			pre -> next = cur -> next;
+    			cur -> next = cur -> next -> next;
+    			pre -> next -> next = temp;
+    		}
+    		else cur = cur -> next;
+    	}
+    	sortListHelper(head, pivot);
+    	/* Here is the trick. */
+    	while (pivot -> next != tail && pivot -> next -> val == pivot -> val)
+    	    pivot = pivot -> next;
+    	if (pivot -> next != tail) sortListHelper(pivot, tail);
+    } 
+    
+    ListNode* sortList(ListNode* head) {
+    	ListNode* new_head = new ListNode(0);
+    	new_head -> next = head;
+    	sortListHelper(new_head, NULL);
+    	return new_head -> next;
+    }
+};
+```
+
+上述解法首先是新定义一个首节点`new_head`，然后在排序过程中，每次都选第一个结点作为基准点，同时`pre`是保存比基准值小的结点，而`cur`则是正常遍历顺序的指针。然后其中使用的加快速度的地方是跳过重复值的代码，即`while (pivot -> next != tail && pivot -> next -> val == pivot -> val)`。
+
+#### 11 [Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/)
+
+题目描述如下：
+
+> Write a program to find the node at which the intersection of two singly linked lists begins.
+>
+> For example, the following two linked lists:
+>
+> ```
+> A:          a1 → a2
+>                    ↘
+>                      c1 → c2 → c3
+>                    ↗            
+> B:     b1 → b2 → b3
+>
+> ```
+>
+> begin to intersect at node c1.
+>
+> **Notes:**
+>
+> - If the two linked lists have no intersection at all, return `null`.
+> - The linked lists must retain their original structure after the function returns.
+> - You may assume there are no cycles anywhere in the entire linked structure.
+> - Your code should preferably run in O(n) time and use only O(1) memory.
+
+这是寻找两个链表的公共结点。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA == NULL || headB == NULL)
+            return NULL;
+        int lensA = 1, lensB = 1;
+        ListNode* pA = headA,*pB = headB;
+        while(pA != NULL){
+            lensA++;
+            pA = pA->next;
+        }
+        while(pB != NULL){
+            lensB++;
+            pB = pB->next;
+        }
+        pA = headA;
+        pB = headB;
+        int n = abs(lensA - lensB);
+        if(lensA > lensB){
+            while(n>0){
+                pA = pA->next;
+                n--;
+            }
+        }else{
+            while(n>0){
+                pB = pB->next;
+                n--;
+            }
+        }
+        while(pA != NULL || pB != NULL){
+            if(pA == pB)
+                return pA;
+            pA = pA->next;
+            pB = pB->next;
+        }
+        return NULL;
+    }
+};
+```
+
+上述解法是分别计算两个链表的长度，然后先让长的链表先走出两个链表长度相差的距离，接着再一起进行遍历链表，当两个指针指向公共结点，就返回该结点，否则返回空。
+
