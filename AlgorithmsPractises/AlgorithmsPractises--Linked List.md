@@ -683,3 +683,339 @@ public:
 
 上述解法是分别计算两个链表的长度，然后先让长的链表先走出两个链表长度相差的距离，接着再一起进行遍历链表，当两个指针指向公共结点，就返回该结点，否则返回空。
 
+#### 12 [Add Two Numbers II](https://leetcode.com/problems/add-two-numbers-ii/)
+
+题目描述如下：
+
+> You are given two **non-empty** linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+>
+> You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+>
+> **Follow up:**
+> What if you cannot modify the input lists? In other words, reversing the lists is not allowed.
+>
+> **Example:**
+>
+> ```
+> Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
+> Output: 7 -> 8 -> 0 -> 7
+> ```
+
+题目是给定两个链表，求两个链表相加的结果，并且链表的顺序是高位到低位的顺序。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int n1 = 0, n2 = 0, carry = 0;
+        ListNode *cur1 = l1, *cur2 = l2, *res = NULL;
+        while(cur1){
+            n1++;
+            cur1 = cur1->next;
+        }
+        while(cur2){
+            n2++;
+            cur2 = cur2->next;
+        }
+        cur1 = l1;
+        cur2 = l2;
+        while(n1 > 0 && n2 > 0){
+            int sum = 0;
+            if(n1 >= n2){
+                sum += cur1->val;
+                cur1 = cur1->next;
+                n1--;
+            }
+            if(n2 > n1){
+                sum += cur2->val;
+                cur2 = cur2->next;
+                n2--;
+            }
+            res = addToFront(sum, res);
+        }
+        cur1 = res;
+        res = NULL;
+        while(cur1){
+            cur1->val += carry;
+            carry = cur1->val / 10;
+            res = addToFront(cur1->val % 10, res);
+            cur2 = cur1;
+            cur1 = cur1->next;
+            delete cur2;
+        }
+        if(carry)
+            res = addToFront(1, res);
+        return res;
+    }
+    ListNode* addToFront(int val, ListNode* head){
+        ListNode* temp = new ListNode(val);
+        temp->next = head;
+        return temp;
+    }
+};
+```
+
+上述解法首先是分别统计两个链表的长度`n1`和`n2`，然后就开始进行链表相加的操作，这里每次相加后都会将链表长度相减，而且实际上是将新得到的链表`res`是原来链表的一个反转，因为函数`addToFront`就是将新结点插入到当前结点前面，所以相加后得到的链表刚好是一个低位到高位的顺序，接着后面的循环就是解决存在的进位问题，并且再次调整顺序，使得最后的链表就是高位到低位的顺序。
+
+另一个解法：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> nums1, nums2;
+        while(l1) {
+            nums1.push_back(l1->val);
+            l1 = l1->next;
+        }
+        while(l2) {
+            nums2.push_back(l2->val);
+            l2 = l2->next;
+        }
+    
+        int m = nums1.size(), n = nums2.size();
+        int sum = 0, carry = 0;
+        ListNode *head = nullptr, *p = nullptr;
+        for(int i = m - 1, j = n - 1; i >= 0 || j >= 0 || carry > 0; i--, j--) {
+            sum = carry;
+            if(i >= 0) 
+                sum += nums1[i];
+    
+            if(j >= 0)
+                sum += nums2[j];
+    
+            carry = sum / 10;
+    
+            p = new ListNode(sum%10);
+            p->next = head;
+            head = p;
+        }
+    
+        return head;
+    }
+};
+```
+
+上述解法则是使用两个数组来保存链表的内容，然后相加的时候从数组末尾开始相加，并且重新生成一个新的链表。
+
+#### 13 [Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/)
+
+题目描述如下：
+
+> Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+>
+> You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+>
+> **Example:**
+> Given `1->2->3->4->5->NULL`,
+> return `1->3->5->2->4->NULL`.
+>
+> **Note:**
+> The relative order inside both the even and odd groups should remain as it was in the input. 
+> The first node is considered odd, the second node even and so on ...
+
+给定一个链表，要求将偶数位置放到奇数位置后面。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if(head == NULL)
+            return head;
+        int lens=0;
+        ListNode* cur = head, *pre = head, *last = NULL;
+        while(cur != NULL){
+            lens++;
+            cur = cur->next;
+            if(cur != NULL && cur->next == NULL)
+                last = cur;
+        }
+        if(lens == 1 || lens == 2)
+            return head;
+        cur = head->next;
+        int nums = lens/2;
+        while(nums>0){
+            // put cur insert to last node
+            ListNode* tmp = cur->next;
+            pre->next = tmp;
+            pre = tmp;
+            last->next = cur;
+            cur->next = NULL;
+            last = cur;
+            if(pre != NULL)
+                cur = pre->next;
+            nums--;
+        }
+        return head;
+    }
+};
+```
+
+上述解法主要是每次将偶数位置的结点插入到链表末端，而循环次数就是偶数位置的个数，需要创建三个指针，`pre`是前驱指针，是指向当前指针`cur`的前一个指针，然后`last`指针指向链表末尾的结点，这里需要注意链表只有1个或者两个结点的时候，直接返回链表即可。然后在循环中注意`pre`可能是一个空指针，再将`cur`指针重新指向下一个偶数位置时，需要判断`pre`是否为空。
+
+另一个更简洁的解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if(!head) 
+            return head;
+        ListNode *odd=head, *evenhead=head->next, *even = evenhead;
+        while(even && even->next)
+        {
+            odd->next = odd->next->next;
+            even->next = even->next->next;
+            odd = odd->next;
+            even = even->next;
+        }
+        odd->next = evenhead;
+        return head;
+    }
+};
+```
+
+这个解法分别创建两个指针`odd`和`even`作为奇数结点和偶数结点的指针，然后在循环的时候，分别将奇数结点和偶数结点放到这两个指针后面，最后再将偶数结点放到奇数结点后面即可。
+
+#### 14 [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+
+题目描述如下：
+
+> Given a linked list, remove the *n*th node from the end of list and return its head.
+>
+> For example,
+>
+> ```
+>    Given linked list: 1->2->3->4->5, and n = 2.
+>
+>    After removing the second node from the end, the linked list becomes 1->2->3->5.
+>
+> ```
+>
+> **Note:**
+> Given *n* will always be valid.
+> Try to do this in one pass.
+
+这是要删除倒数第N个结点。解法如下：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if(head == NULL || head->next == NULL)
+            return NULL;
+        int lens = 0;
+        ListNode *cur = head;
+        ListNode *new_head = new ListNode(0);
+        new_head->next = head;
+        while(cur != NULL){
+            lens++;
+            cur = cur->next;
+        }
+        int k = lens - n;
+        if(k==0){
+            new_head->next = head->next;
+            head->next = NULL;
+            delete head;
+            return new_head->next;
+        }
+        cur = head;
+        int i=1;
+        while(i != k && cur){
+            cur = cur->next;
+            i++;
+            
+        }
+        if(i == k){
+            ListNode* tmp = cur->next;
+            cur->next = tmp->next;
+            if(tmp->next != NULL)
+                tmp->next = NULL;
+        }
+        return head;
+    }
+};
+```
+
+上述解法先得到链表长度`lens`，然后得到被删除前的结点所在的位置`k = lens-n`，如果`k == lens`，也就是删除链表第一个结点，所以需要先创建一个新结点指向头结点，即`new_head`，而如果不等于，则先遍历链表，找到被删除结点的前一个结点，然后就可以删除其后面的结点。
+
+另一个解法：
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if (!head)
+        	return nullptr;
+
+        ListNode new_head(-1);
+        new_head.next = head;
+        ListNode *slow = &new_head, *fast = &new_head;
+        for (int i = 0; i < n; i++)
+            fast = fast->next;
+    
+        while (fast->next) 
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        ListNode *to_be_deleted = slow->next;
+        slow->next = slow->next->next;
+        
+        delete to_be_deleted;
+        return new_head.next;
+    }
+};
+```
+
+上述解法创建了两个指针`fast`和`slow`，并先让`fast`走了`n`步，接着让两个指针同时走，则当`fast`走到末尾的时候，`slow`走到被删除结点的前一个结点。
+
+#### 15 
