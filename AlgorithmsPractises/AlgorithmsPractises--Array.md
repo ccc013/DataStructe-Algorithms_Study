@@ -610,3 +610,48 @@ int findDuplicate(vector<int>& nums) {
 ```
 
 这个解法也是使用了两个指针，利用了二分查找的思路。
+
+##### 13 [Merge Intervals](https://leetcode.com/problems/merge-intervals/)
+
+题目描述如下：
+
+> Given a collection of intervals, merge all overlapping intervals.
+>
+> For example,
+> Given `[1,3],[2,6],[8,10],[15,18]`,
+> return `[1,6],[8,10],[15,18]`.
+
+这是给定几个数组，然后将相互有重叠部分的数组合并在一起。解法如下：
+
+```c++
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+        if(intervals.size() <= 0)
+            return intervals;
+        int lens = intervals.size();
+        sort(intervals.begin(), intervals.end(), [](Interval a, Interval b){return a.start < b.start;});
+        vector<Interval> res;
+        res.push_back(intervals[0]);
+        for(int i=1; i<lens; i++){
+            if(res.back().end < intervals[i].start)
+                res.push_back(intervals[i]);
+            else
+                res.back().end = max(res.back().end, intervals[i].end);
+        }
+        return res;
+    }
+};
+```
+
+上述解法首先是调用`sort()`，根据两个数组首元素大小排序，进行递增排序。然后再循环`Intervals`，如果前一个数组的尾元素小于需要比较的数组的首元素，说明两者没有重叠，如果有，则比较两个数组的尾元素大小，取大的作为更新值。
+
