@@ -741,3 +741,59 @@ public:
 
 上述解法其实并没有满足条件的空间复杂度是$O(1)$的条件。
 
+下面给出空间复杂度是$O(1)$的解法：
+
+```c++
+class ScaleSort {
+public:
+    vector<int> sortElement(vector<int> A, int n, int k) {
+        // write code here
+        // 建立一个最小堆
+        vector<int>  myheap(A.begin(), A.begin() + k);
+        buildHeap(myheap, k);
+        // 每次弹出堆顶，并加入下一个元素，即i+k
+        for (int i = 0; i != n - k; i++){
+            A[i] = myheap[0];
+            myheap[0] = A[i + k];
+            heapSort(myheap, 0, k);
+        }
+        // 对于剩下的n-k 到 n-1位置的元素的处理
+        for (int i = 0; i != k; i++){
+            // 起始位置是从 n-k 开始的
+            A[i + n - k] = myheap[0];
+            // 堆内将堆顶和堆后面的元素依次交换
+            myheap[0] = myheap[k - 1 - i];
+            heapSort(myheap, 0, k - i);
+        }
+        return A;
+        
+    }
+    // 建堆
+    void buildHeap(vector<int>& a, int k){
+        for(int i=k/2 -1; i>=0; --i)
+            heapSort(a, i, k);
+    }
+    void heapSort(vector<int>& A, int i, int n){
+        int left = i * 2 + 1;
+        while (left < n){
+            // 对比左右子树，选择更小的数值
+            if (left + 1 < n && A[left] > A[left + 1])
+                left++;
+            // 再与父结点进行比较
+            if (A[i] < A[left])
+                return;
+            else{
+                int tmp = A[left];
+                A[left] = A[i];
+                A[i] = tmp;
+                // 此时就继续往下比较，用left作为父结点，进行比较
+                i = left;
+                left = i * 2 + 1;
+            }
+        }
+    }  
+};
+```
+
+上述解法主要使用了堆排序，先建立一个长为`k`的最小堆，每次将堆顶按顺序放回到原数组中，然后要注意`n-k`位置后的元素个数会不足k个。并且堆排序要使用非递归形式，递归形式的空间复杂度是$O(logN)$。
+
