@@ -655,3 +655,89 @@ public:
 
 上述解法首先是调用`sort()`，根据两个数组首元素大小排序，进行递增排序。然后再循环`Intervals`，如果前一个数组的尾元素小于需要比较的数组的首元素，说明两者没有重叠，如果有，则比较两个数组的尾元素大小，取大的作为更新值。
 
+##### 14 判断数组能否分成和相同的四个子数组
+
+题目是来自阿里笔试的一道题目：
+
+> 判断数组能否分成和相同的四个子数组
+
+解法如下：
+
+```c++
+// 给定一个数组，判断能否将其分成相等份的四个部分，即四个部分的元素之和相等。
+bool getFourPart(int *a, int n){
+	if (n < 8)
+		return false;
+	int i = 0, j = n-1;
+	int suma = 0;
+	int suml = a[i], sumr = a[j];
+	while (i < j){
+		if (suml < sumr){
+			suml += a[++i];
+		}
+		else if (suml > sumr){
+			sumr += a[--j];
+		}
+		else{
+			if (j - i > 2){
+				// 已经找到两个相等的子数组，接着再继续找另外两个子数组，用suma保存之前相等的结果。
+				suma = suml;
+				suml = sumr = 0;
+			}
+			else if (j - i == 2){
+				if (suma == suml)
+					return true;
+			}
+			i += 2;
+			j -= 2;
+			suml += a[i];
+			sumr += a[j];
+		}
+	}
+	return false;
+}
+```
+
+上述解法首先是找到两个相等的子数组，然后判断剩下的元素是否能再次凑成两个子数组。
+
+##### 15 重复值判断练习题
+
+题目描述如下：
+
+> 请设计一个高效算法，判断数组中是否有重复值。必须保证额外空间复杂度为O(1)。
+>
+> 给定一个int数组**A**及它的大小**n**，请返回它是否有重复值。
+>
+> 测试样例：
+>
+> >  [1,2,3,4,5,5,6],7
+>
+> >  返回：true
+
+解法如下：
+
+```c++
+class Checker {
+public:
+    bool checkDuplicate(vector<int> a, int n) {
+        // write code here
+        int min = a[0], max=a[0];
+        // 查找数组中的最大值和最小值
+        for(int i=1; i<n; ++i){
+            min = (min < a[i])? min:a[i];
+            max = (max > a[i])? max:a[i];
+        }
+        // 建立一个新的数组
+        vector<int> tmp(max-min+1);
+        // 统计每个索引值的数量，如果大于1，说明有重复值
+        for(int i=0; i<n; ++i){
+            if(++tmp[a[i]-min]>1)
+                return true;
+        }
+        return false;
+    }
+};
+```
+
+上述解法其实并没有满足条件的空间复杂度是$O(1)$的条件。
+
