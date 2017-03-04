@@ -488,3 +488,76 @@ public:
 
 上述解法是循环主串`t`，并且记录字符串`s`得到的索引值`sIdx`，如果是符合要求的子串，那么最终`sIdx`会等于子串的长度，否则就不是。
 
+##### 12 [字符串计数](https://www.nowcoder.com/questionTerminal/f72adfe389b84da7a4986bde2a886ec3?orderByHotValue=0&done=0&pos=11&mutiTagIds=593&onlyReference=false)
+
+题目如下：
+
+> 求字典序在s1和s2之间的，长度在len1到len2的字符串的个数，结果mod 1000007。
+>
+> **输入描述:**
+>
+> > 每组数据包涵s1（长度小于100），s2（长度小于100），len1（小于100000），len2（大于len1，小于100000）
+>
+> **输出描述:**
+>
+> > 输出答案。
+>
+> **输入例子:**
+>
+> > ab ce 1 2
+>
+> **输出例子:**
+>
+> > 56
+
+解法如下：
+
+```c++
+#include<iostream>  
+#include<string>  
+#include<vector>  
+#include<math.h>  
+using namespace std;  
+   
+int main(){  
+    //根据题中给出的例子，这个字符串只包含小写字母，不然答案就不应该是56了  
+    string s1,s2;  
+    int len1,len2;  
+    while(cin>>s1>>s2>>len1>>len2){  
+        //只包含小写字母的字符串可以看成26进制的数制  
+        //将s1和s2补长到len2长度  
+        s1.append(len2-s1.size(),'a');  
+        s2.append(len2-s2.size(),(char)('z'+1));  
+        vector<int> array;  
+        // 计算两个字符串对应字符的差值
+        for(int i=0;i<len2;i++){  
+            array.push_back(s2[i]-s1[i]);  
+        }  
+        int result = 0;  
+        // 从len1长度开始遍历，结束条件是大于len2
+        for(int i=len1;i<=len2;i++){  
+           // 内循环是从 0到i 个字符开始计算相差个数
+            for(int k=0;k<i;k++){  
+                result += array[k]*pow(26,i-1-k);  
+            }  
+        }  
+        //所有字符串最后都不包含是s2自身，所以最后要减1；  
+        cout<<result-1<<endl;  
+    }  
+    return 0;  
+}  
+```
+
+首先要搞清楚字典序的意思：**即从两个字符串的下标为0开始进行对比，字典序是从左往右进行对比的。** 
+
+
+例如ab，abc这样两者之间的字符串个数为aba、abb，而ab、bb两者之间的字符串个数为：ac、ad、ae…az、ba这26个，所以高位的字符串个数要是26的i次幂。 
+
+
+其次，要理解题目的“长度在len1到len2的字符串的个数”，指的是长度在len1的字符串个数、长度在len1+1的字符串个数。。。长度为len2的字符串个数。 
+
+
+例abcde、acede这两个字符串，长度为1到4表示的是长度为1的时候两个字符a、a之间的个数，长度为2的时候两个字符ab、ac之间的个数，长度为3的时候abc、ace两个字符串之间的个数，长度为4：abcd、aced的个数。 
+
+ 所以计算的时候应该以长度作为变量遍历len1到len2之间的字符串个数，最后相加。
+
