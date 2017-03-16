@@ -561,3 +561,68 @@ int main(){
 
  所以计算的时候应该以长度作为变量遍历len1到len2之间的字符串个数，最后相加。
 
+##### 13 分割字符串
+
+题目如下：
+
+> 输入一个字符串和一个包含所有合法组合的合集，请分割输入的字符串，使每一个分割出来的字符串都在合法组合中，输出所有可能的分割方法.
+>
+> 比如输入的字符串是'yourandit'，合法组为['you','your','and','rand','it']，则应该输出['you','rand','it']和['your','and','it']
+
+解法如下：
+
+```c++
+void helper(vector<vector<string>> &res, vector<string> &v, string &str, int begin, int end, unordered_map<string, int> &mymap)
+{
+	if (begin == end) {
+		res.push_back(v);
+		return;
+	}
+	for (int i = 1; i <= end - begin; ++i)
+	{
+		// 生成从begin位置开始，长度为i的子串
+		string tmp = str.substr(begin, i);
+		if (mymap.find(tmp) != mymap.end()) {
+			v.push_back(tmp);
+			// 查找后面字符串是否包含合法字符串
+			helper(res, v, str, begin + i, end, mymap);
+			v.pop_back();
+		}
+	}
+}
+
+vector<vector<string>> stringSplit(string &str, vector<string> &legal)
+{
+	unordered_map<string, int> mymap;
+	for (int i = 0; i < legal.size(); i++)
+		mymap[legal[i]] = 1;
+	// 存储最终结果
+	vector<vector<string>> res;
+	// 存储可能的分割结果
+	vector<string> v;
+	helper(res, v, str, 0, str.length(), mymap);
+	return res;
+}
+
+
+int main()
+{
+	string str = "yourandit";
+	vector<vector<string>> res;
+	vector<string> legal{ "you", "your", "and", "rand", "it" };
+	res = stringSplit(str, legal);
+	for (auto x : res) {
+		for (auto y : x) {
+			cout << y << " ";
+		}
+		cout << endl;
+	}
+	system("pause");
+	return 0;
+}
+```
+
+使用一个哈希表保存每个合法字符，并且用来作为查找使用，每次查找的时候使用`substr`函数生成子串，当找到子串的时候，就递归调用`helper`函数，继续查找`begin+i`开始的剩余字符串是否由合法的字符串。并且只有最终`start==end`的时候，也就是完全分割输入字符串，才将当前得到的合法字符串都保存到最终结果。
+
+
+
