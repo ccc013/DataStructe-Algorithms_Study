@@ -624,5 +624,117 @@ int main()
 
 使用一个哈希表保存每个合法字符，并且用来作为查找使用，每次查找的时候使用`substr`函数生成子串，当找到子串的时候，就递归调用`helper`函数，继续查找`begin+i`开始的剩余字符串是否由合法的字符串。并且只有最终`start==end`的时候，也就是完全分割输入字符串，才将当前得到的合法字符串都保存到最终结果。
 
+##### 14 由字符环得到最大最长整数
+
+题目如下：
+
+> 有n个正整数(每个数小于10亿)，将它们表示成字符串形式。对每一个字符串s，可以翻转为新字符串s'，如"1234"可以翻转成"4321"。现在，将这n个字符串以任意顺序连成一个字符环，每个字符串可以选择是否翻转。在字符环中，从任意一个位置开始，遍历整个环，得到一个长整数，请问，如何才能得到最大的长整数。
+>
+> 输入：
+>
+> > 共一行，为n个整数，空格分隔。
+>
+> 输出：
+>
+> > 共一行，为一个最大的长整数
+>
+> 输入范例：
+>
+> > 123 234 2
+>
+> 输出范例
+>
+> > 4323212
+
+这是阿里的测试编程题。我的解法如下：
+
+```c++
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+
+using namespace std;
+// 调整顺序，得到一个最大值
+void getMax(string& str){
+	int lens = str.size();
+	// 找到最大数字的位置
+	int max = 0;
+	for (int i = 1; i < lens; ++i){
+		int tmp = str[i] - '0';
+		int m = str[max] - '0';
+		max = (m > tmp) ? max : i;
+	}
+	// 先反转最大数字前面的字符串
+	reverse(str.begin(), str.begin() + max);
+	reverse(str.begin() + max, str.end());
+	reverse(str.begin(), str.end());
+}
+// 比较函数
+static bool compare(const string& s1, const string& s2){
+	string ss1 = s1 + s2;
+	string ss2 = s2 + s1;
+	return ss1>ss2;
+}
+
+long long stoint(string in){
+	long long res = 0;
+	int lens = in.size();
+	for (int i = 0; i < lens; ++i){
+		int tmp = in[i] - '0';
+		res = res * 10 + tmp;
+	}
+	return res;
+}
+
+//注意：当字符串为空时，也会返回一个空字符串  
+void split(std::string& s, std::string& delim, std::vector< std::string >& ret)
+{
+	size_t last = 0;
+	size_t index = s.find_first_of(delim, last);
+	while (index != std::string::npos)
+	{
+		ret.push_back(s.substr(last, index - last));
+		last = index + 1;
+		index = s.find_first_of(delim, last);
+	}
+	if (index - last>0)
+	{
+		ret.push_back(s.substr(last, index - last));
+	}
+}
+
+int main()
+{
+	vector<string> input;
+	string s;
+	string res;
+	getline(cin, s);
+	
+	int i = 0;
+	string ss = " ";
+	int count = 0;
+	split(s, ss, input);
+	int lens = input.size();
+	while (i<lens){
+		getMax(input[i]);
+		++i;
+	}
+	// 排序
+	sort(input.begin(), input.end(), compare);
+	// 按顺序排列
+	for (int i = 0; i<input.size(); ++i)
+		res.append(input[i]);
+	cout << stoint(res) << endl;
+
+	system("pause");
+	return 0;
+}
+```
+
+首先是对每个字符串进行调整，得到其可以表示的最大整数，这个过程首先是找到最大数字的位置，然后分别反转以最大数字位置为分界线的前后两部分字符串，最后再反转整个字符串即可。接着联合起来的时候，也需要设定一个比较函数，它的规则是两个字符串按不同顺序拼接在一起，如果是`ab > ba`，表示字符串a大于字符串b，那么排序的时候a排在b的前面，然后再将字符串都拼接起来，并转换成整数，输出。
+
+这里还使用了字符串的分割函数`split()`函数，根据给定的分割字符，分割字符串，这里主要是用于输入一行数字后，通过空格字符来分割不同的数字。
+
 
 
