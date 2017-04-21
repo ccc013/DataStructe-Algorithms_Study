@@ -700,5 +700,80 @@ bool getFourPart(int *a, int n){
 
 上述解法首先是找到两个相等的子数组，然后判断剩下的元素是否能再次凑成两个子数组。
 
+##### 15.  找出左边比它小，右边比它大的数值的位置
+
+>  给出一个元素无序的数组，求出一个数，使得其左边的数都小于它，右边的数都大于等于它。
+>
+> 举例：1,2,3,1,2,0,5,6，返回下标6（数字为5）。
+
+思路（1）：
+
+朴素[算法](http://lib.csdn.net/base/datastructure)，对于每一个数，都检测它的左边和右边是否满足题意。
+
+时间复杂度为O（n^2）
+
+思路（2）
+
+使用变量求解：
+
+（1）目前找到符合题意的候选值，nCandid
+
+（2）目前已遍历数组的最大值，nMax：为了选下一次的候选值
+
+（3）目前的候选值是否有效，bIsExist：检测是否需要重新选择候选值
+
+思路：如果候选值有效，可以继续遍历下面的数据
+
+如果候选值小于目前的值，则该候选失效。之后遍历元素时，就要重新选择候选值
+
+选择候选值时，对于某一个元素，如果该元素比之前遍历过元素的最大值还要大nMax，则该元素就为候选。
+
+复杂度：遍历一遍数组即可，时间：O（n），空间O（1）
+
+代码如下：
+
+```c++
+#include <iostream>  
+#include <assert.h>  
+#include <list>  
+using namespace std;  
+  
+int FindNum(int nArr[],int nLen)  
+{  
+    assert(nArr && nLen > 0);  
+    int nPos = 0;  
+    int nCandid = nArr[0];  
+    int nMax = nArr[0];  
+    bool bIsExist = true;  
+    for (int i = 1;i < nLen;i++)  
+    {  
+        if (bIsExist)//候选有效  
+        {  
+            if (nCandid > nArr[i])//候选失效  
+            {  
+                bIsExist = false;  
+            }  
+            else  
+            {  
+                nMax = nArr[i];  
+            }  
+        }  
+        else //候选失效  
+        {  
+            if (nArr[i] >= nMax)//重新找到候选  
+            {  
+                bIsExist = true;  
+  
+                nCandid = nArr[i];  
+                nMax = nArr[i];   
+                nPos = i;  
+            }  
+        }  
+    }  
+    return bIsExist ? nPos : -1;   
+}  
+
+```
+
 
 
