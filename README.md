@@ -1,5 +1,24 @@
 # DataStructe-Algorithms_Study
 
+### Python
+
+#### 学习进度
+
+添加 Python 代码，学习极客时间的数据结构与算法之美课程的笔记和代码，以及 python 代码实现的 leetcode 题目。
+
+已完成课程:
+
+1. [复杂度分析](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Notes/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E%E8%AF%BE%E7%A8%8B/%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90.md)，[code](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Python/Complexity_analysis.ipynb)
+2. [数组](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Notes/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E%E8%AF%BE%E7%A8%8B/%E6%95%B0%E7%BB%84.md)
+3. [链表](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Notes/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E%E8%AF%BE%E7%A8%8B/%E9%93%BE%E8%A1%A8.md)
+4. [栈](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Notes/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E%E8%AF%BE%E7%A8%8B/%E6%A0%88.md)，[codes](https://github.com/ccc013/DataStructe-Algorithms_Study/tree/master/Python/Stack)
+
+
+
+### C++
+
+**2016-12 记录**
+
 学习数据结构和算法时的一些练习代码。
 
 有关算法性能的基本知识点笔记：
@@ -8,11 +27,13 @@
 2. [程序性能2--时间复杂性](http://ccc013.github.io/2016/06/04/%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD2-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E6%80%A7/)
 3. [程序性能3--渐进符号](http://ccc013.github.io/2016/06/07/%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD3-%E6%B8%90%E8%BF%9B%E7%AC%A6%E5%8F%B7/)
 
-暂时完成的数据结构和算法分别有：
+暂时完成的数据结构和算法分别有
 
-### 数据结构
 
-#### 线性表
+
+#### 数据结构
+
+##### 线性表
 
 1. [线性表](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/LinearList/llist.h)
 2. [可调整大小的线性表](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/LinearList/ResizeLinearList.h)
@@ -26,7 +47,7 @@
 2. [数据描述2--单向链表](http://ccc013.github.io/2016/06/09/%E6%95%B0%E6%8D%AE%E6%8F%8F%E8%BF%B02-%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/)
 3. [数据描述3-间接寻址&模拟指针](http://ccc013.github.io/2016/06/16/%E6%95%B0%E6%8D%AE%E6%8F%8F%E8%BF%B03-%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80-%E6%A8%A1%E6%8B%9F%E6%8C%87%E9%92%88/)
 
-#### 数组和矩阵
+##### 数组和矩阵
 
 1. [1维数组](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/Array1D.h)
 2. [矩阵](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/ArrayAndMatrix/Matrix.h)
@@ -42,7 +63,7 @@
 4. [数组和矩阵4--稀疏矩阵](http://ccc013.github.io/2016/07/07/%E6%95%B0%E7%BB%84%E5%92%8C%E7%9F%A9%E9%98%B54-%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5/)
 
 
-#### 堆栈
+##### 堆栈
 
 1. [堆栈--数组实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Stack/Stack.h)
 2. [链栈](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Stack/LinkedStack.h)
@@ -53,7 +74,7 @@
 2. [堆栈2-应用](http://ccc013.github.io/2016/07/21/%E5%A0%86%E6%A0%882-%E5%BA%94%E7%94%A81/)
 
 
-#### 队列
+##### 队列
 
 1. [队列--数组实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Queue/Queue.h)
 2. [队列--链表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/Queue/LinkedQueue.h)
@@ -62,7 +83,7 @@
 
 1. [队列1--基本概念及实现方法](http://ccc013.github.io/2016/07/23/%E9%98%9F%E5%88%971-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95/)
 
-#### 跳表和散列
+##### 跳表和散列
 
 1. [字典--链表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/SortedChain.h)
 2. [跳表](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SkipList%26HashTable/SkipList.h)
@@ -74,14 +95,14 @@
 1. [跳表&散列1-字典&跳表](http://ccc013.github.io/2016/07/27/%E8%B7%B3%E8%A1%A8-%E6%95%A3%E5%88%971-%E5%AD%97%E5%85%B8-%E8%B7%B3%E8%A1%A8/)
 2. [跳表&散列2-散列](http://ccc013.github.io/2016/08/07/%E8%B7%B3%E8%A1%A8-%E6%95%A3%E5%88%972-%E6%95%A3%E5%88%97/)
 
-#### 二叉树
+##### 二叉树
 
 1. [二叉树--链表实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/BinaryTree/BinaryTree.h)
 
 相关知识点笔记:
 1. [二叉树的基本概念和实现](http://ccc013.github.io/2016/08/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E5%AE%9E%E7%8E%B0/)
 
-#### 优先队列
+##### 优先队列
 1. [最大堆的实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/PriorityQueue/MaxHeap.h)
 2. [最大高度优先左高树的实现](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/PriorityQueue/MaxHBLT.h)
 
@@ -89,7 +110,7 @@
 1. [优先队列1--堆](http://ccc013.github.io/2016/08/23/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%971-%E5%A0%86/)
 2. [优先队列2-左高树](http://ccc013.github.io/2016/08/24/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%972-%E5%B7%A6%E9%AB%98%E6%A0%91/)
 
-#### 搜索树
+##### 搜索树
 
 1. [二叉搜索树](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SearchTrees/BSTree.h)
 
@@ -97,20 +118,22 @@
 1. [搜索树1-二叉搜索树](http://ccc013.github.io/2016/08/31/%E6%90%9C%E7%B4%A2%E6%A0%911-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/)
 
 
-### 算法
+#### 算法
 
 算法目前记录了在[hihocoder](http://hihocoder.com/problemset)上的练习题，这个网站上的练习题按照难度分成从简单到难的level1到level5，目前主要是从简单的level1做起，记录做过的题目和成功提交的代码实现。
 
 目前做过的题目如下：
 
-#### level1
 
-1. [A+B](http://hihocoder.com/problemset/problem/1000)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
-2. [字符消除](http://hihocoder.com/problemset/problem/1039)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
-3. [补提交卡](http://hihocoder.com/problemset/problem/1051)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
-4. [然而沼跃鱼早就看穿了一切](http://hihocoder.com/problemset/problem/1082)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
-5. [Lost in the City](http://hihocoder.com/problemset/problem/1094)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises1.md)
-6. [Magic Box](http://hihocoder.com/problemset/problem/1135) --[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises2.md)
+
+##### level1
+
+1. [A+B](http://hihocoder.com/problemset/problem/1000)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises1.md)
+2. [字符消除](http://hihocoder.com/problemset/problem/1039)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises1.md)
+3. [补提交卡](http://hihocoder.com/problemset/problem/1051)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises1.md)
+4. [然而沼跃鱼早就看穿了一切](http://hihocoder.com/problemset/problem/1082)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises1.md)
+5. [Lost in the City](http://hihocoder.com/problemset/problem/1094)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises1.md)
+6. [Magic Box](http://hihocoder.com/problemset/problem/1135) --[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises2.md)
 
 
 
@@ -119,31 +142,33 @@
 
 做的题目如下：
 
-#### [链表](https://leetcode.com/tag/linked-list/)
+##### [链表](https://leetcode.com/tag/linked-list/)
 
-1. [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+1. [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-2. [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+2. [Remove Duplicates from Sorted List](https://leetcode.com/problems/remove-duplicates-from-sorted-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-3. [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+3. [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-4. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+4. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-5. [Delete Node in a Linked List](https://leetcode.com/problems/delete-node-in-a-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+5. [Delete Node in a Linked List](https://leetcode.com/problems/delete-node-in-a-linked-list/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-6. [Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+6. [Remove Linked List Elements](https://leetcode.com/problems/remove-linked-list-elements/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
-7. [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
+7. [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)--[实现的代码](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/AlgorithmsPractises/AlgorithmsPractises--Linked%20List.md)
 
 
+
+##### 排序算法
 
 排序算法的总结代码，分别总结了如下7种排序算法：
 
-1. [冒泡排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/BubbleSortTest.cpp)
-2. [简单选择排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/SimpleSelectionSortTest.cpp)
-3. [直接插入排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/StraightInsertionSortTest.cpp)
-4. [希尔排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/ShellSortTest.cpp)
-5. [堆排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/HeapSortTest.cpp)
-6. [归并排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/MergeSortTest.cpp)
-7. [快速排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/QuickSortTest.cpp)
-8. [桶排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/BucketSort.cpp)
+1. [冒泡排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/BubbleSortTest.cpp)
+2. [简单选择排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/SimpleSelectionSortTest.cpp)
+3. [直接插入排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/StraightInsertionSortTest.cpp)
+4. [希尔排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/SortAlgorithms/C%2B%2B/ShellSortTest.cpp)
+5. [堆排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/HeapSortTest.cpp)
+6. [归并排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/MergeSortTest.cpp)
+7. [快速排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/QuickSortTest.cpp)
+8. [桶排序](https://github.com/ccc013/DataStructe-Algorithms_Study/blob/master/C%2B%2B/SortAlgorithms/BucketSort.cpp)
