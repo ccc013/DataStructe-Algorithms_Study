@@ -22,11 +22,10 @@ class ListNode:
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        reversed_head = None
-        current = head
-        while current:
-            reversed_head, reversed_head.next, current = current, reversed_head, current.next
-        return reversed_head
+        pre, cur = None, head
+        while cur:
+            pre, pre.next, cur = cur, pre, cur.next
+        return pre
 
 
 if __name__ == '__main__':
