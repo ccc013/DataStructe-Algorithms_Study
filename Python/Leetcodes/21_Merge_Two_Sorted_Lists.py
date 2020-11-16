@@ -28,33 +28,20 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        if l1 is None:
-            return l2
-        if l2 is None:
-            return l1
-        # 确定第一个结点
-        if l1.val <= l2.val:
-            new_head = cur = l1
-            l1 = l1.next
-        else:
-            new_head = cur = l2
-            l2 = l2.next
-        while l1 or l2:
-            # 任意一个链表为空，都可以不需要再循环
-            if l1 is None:
-                cur.next = l2
-                return new_head
-            if l2 is None:
-                cur.next = l1
-                return new_head
+        new_head = ListNode(None)
+        cur = new_head
+        while l1 and l2:
             if l1.val <= l2.val:
-                cur.next = l1
-                l1 = l1.next
+                cur.next, l1 = l1, l1.next
             else:
-                cur.next = l2
-                l2 = l2.next
+                cur.next, l2 = l2, l2.next
             cur = cur.next
-        return new_head
+        if l1:
+            cur.next = l1
+        else:
+            cur.next = l2
+        
+        return new_head.next
 
 
 def build_linked_list(vals):
@@ -92,4 +79,3 @@ if __name__ == '__main__':
     solution = Solution()
     new_linked_list = solution.mergeTwoLists(linked_list_a, linked_list_b)
     print_linked_list(new_linked_list)
-
