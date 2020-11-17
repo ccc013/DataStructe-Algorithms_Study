@@ -40,7 +40,7 @@ class Solution(object):
             cur.next = l1
         else:
             cur.next = l2
-        
+
         return new_head.next
 
 
