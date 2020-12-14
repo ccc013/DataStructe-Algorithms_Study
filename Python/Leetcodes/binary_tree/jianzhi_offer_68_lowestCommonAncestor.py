@@ -57,14 +57,3 @@ class Solution:
         if p.val > root.val and q.val > root.val:
             return self.lowestCommonAncestor3(root.right, p, q)
         return root
-
-
-if __name__ == '__main__':
-    root = TreeNode(3)
-    root.left = TreeNode(1)
-    root.right = TreeNode(4)
-    root_left = root.left
-    root_right = root.right
-    root_left.left = TreeNode(0)
-    root_right.right = TreeNode(5)
-    solution = Solution()
